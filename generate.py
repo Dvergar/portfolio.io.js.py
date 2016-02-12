@@ -1,24 +1,55 @@
+"""Usage:
+    generate.py makeproject <name> [--dst <path>]
+    generate.py build <path>
+
+-h --help    show this
+
+"""
 import os
+from distutils.dir_util import copy_tree
 
 import yaml
+from docopt import docopt
 from jinja2 import Template, Environment, FileSystemLoader
 
+arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
+print arguments
 
-datas_types = {}
-for f in os.listdir("datas"):
 
-    file_name = os.path.splitext(f)[0]
-    with open(os.path.join('datas', f), 'r') as stream:
-	    datas = yaml.load(stream)
-    datas_types[file_name] = datas
+if arguments['makeproject']:
+    name = arguments['<name>']
+    path = arguments['<path>']
 
-print datas_types
+    if path is None:
+        path = ''
+    path = os.path.join(path, name)
 
-env = Environment(loader=FileSystemLoader(""))
-tpl = env.get_template("template.html")
-output = tpl.render(
-    datas_types=datas_types)
+    if not os.path.exists(path):
+        os.makedirs(path)
 
-path = os.path.join("index.html")
-with open(path, "wb") as fh:
-    fh.write(output.encode('utf-8'))
+    copy_tree("datas", os.path.join(path, "datas"))
+
+if arguments['build']:
+    path = arguments['<path>']
+
+    datas_types = {}
+    for f in os.listdir(path):
+        file_name = os.path.splitext(f)[0]
+        file_ext = os.path.splitext(f)[-1]
+
+        if not os.path.isfile(os.path.join(path, f)):
+            continue
+        if not file_ext == '.yaml':
+            continue
+
+        with open(os.path.join(path, f), 'r') as stream:
+            datas = yaml.load(stream)
+        datas_types[file_name] = datas
+
+    env = Environment(loader=FileSystemLoader(""))
+    tpl = env.get_template("template.html")
+    output = tpl.render(
+        datas_types=datas_types)
+
+    with open(os.path.join(path, "index.html"), "wb") as fh:
+        fh.write(output.encode('utf-8'))

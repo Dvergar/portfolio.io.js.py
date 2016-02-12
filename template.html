@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Your page title here :)</title>
+  <title>{{settings.title}}</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -84,8 +84,16 @@
     <div class="container">
       <div class="row">
         <div style="margin-top: 5%">
-          <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt">DUMMY'S WORKS</h2>
-           <!-- <span class="symbol">&#xe286;</span> -->
+          <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase">
+          	{% if settings.header %}
+          		{{settings.header}}
+        		{% else %}
+        			{{settings.title}}
+          	{% endif %}
+          	<img src="{{settings.logo_image}}"/>
+          	
+          </h2>
+          <!-- <span class="symbol">&#xe286;</span> -->
           <!-- <p>Various works about game development <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p> -->
         </div>
       </div>

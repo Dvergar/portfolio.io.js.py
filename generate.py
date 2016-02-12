@@ -42,14 +42,17 @@ if arguments['build']:
         if not file_ext == '.yaml':
             continue
 
+        if file_name == 'settings':
+            with open(os.path.join(path, f), 'r') as stream:
+                settings = yaml.load(stream)
+
         with open(os.path.join(path, f), 'r') as stream:
-            datas = yaml.load(stream)
-        datas_types[file_name] = datas
+            datas_types[file_name] = yaml.load(stream)
 
     env = Environment(loader=FileSystemLoader(""))
     tpl = env.get_template("template.html")
     output = tpl.render(
-        datas_types=datas_types)
+        datas_types=datas_types, settings=settings)
 
     with open(os.path.join(path, "index.html"), "wb") as fh:
         fh.write(output.encode('utf-8'))

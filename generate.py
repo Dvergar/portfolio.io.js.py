@@ -12,6 +12,7 @@ for f in os.listdir("datas"):
 	    datas = yaml.load(stream)
     datas_types[file_name] = datas
 
+print datas_types
 
 env = Environment(loader=FileSystemLoader(""))
 tpl = env.get_template("template.html")

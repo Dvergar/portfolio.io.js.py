@@ -15,7 +15,7 @@
 
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,600,800" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300italic' rel='stylesheet' type='text/css'>
 
   <!-- CSS
@@ -69,12 +69,17 @@
 			{% for data_type_name, data_type in datas_types.items() %}
 				{% for item_name, item in data_type.items() %}
 		      <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
-		        <img src="http://i.imgur.com/UzuKWlu.gif" class="one-third column"/>
+		        <div class="one-third column">
+		        	<img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
+		        	{% for label in item.labels %}
+	        			<div style="background-color:#c7f464;font-weight:800;text-transform:uppercase;text-align:center;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
+        			{% endfor %}
+        		</div>
 		        
 		        <div class="two-thirds column">
 		          <h1 style="color:#c44d58;font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
 		          <p style="color:#6d2b2b; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
-		     	 </div>
+		     	  </div>
 
 		    	</div>
 				{% endfor %}

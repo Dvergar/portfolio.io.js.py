@@ -45,6 +45,7 @@ if arguments['build']:
         if file_name == 'settings':
             with open(os.path.join(path, f), 'r') as stream:
                 settings = yaml.load(stream)
+            continue
 
         with open(os.path.join(path, f), 'r') as stream:
             datas_types[file_name] = yaml.load(stream)

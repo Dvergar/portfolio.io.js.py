@@ -7,6 +7,7 @@
 """
 import os
 from distutils.dir_util import copy_tree
+import shutil
 
 import yaml
 from docopt import docopt
@@ -26,6 +27,11 @@ if arguments['makeproject']:
 
     if not os.path.exists(path):
         os.makedirs(path)
+
+    # MAKE DEFAULT PROJECT FROM SAPLE FILES
+    shutil.copy(os.path.join('sample','settings.yaml'), path)
+    shutil.copy(os.path.join('sample','games.yaml'), path)
+
 
 if arguments['build']:
     path = arguments['<path>']
@@ -56,7 +62,7 @@ if arguments['build']:
     export_path = os.path.join(path, 'export')
     if not os.path.exists(export_path):
         os.mkdir(export_path)
-    copy_tree("datas", os.path.join(export_path, "datas"))
+        copy_tree("datas", os.path.join(export_path, "datas"))
 
     with open(os.path.join(export_path, "index.html"), "wb") as fh:
         fh.write(output.encode('utf-8'))

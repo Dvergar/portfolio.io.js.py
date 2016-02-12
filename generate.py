@@ -27,8 +27,6 @@ if arguments['makeproject']:
     if not os.path.exists(path):
         os.makedirs(path)
 
-    copy_tree("datas", os.path.join(path, "datas"))
-
 if arguments['build']:
     path = arguments['<path>']
 
@@ -55,5 +53,10 @@ if arguments['build']:
     output = tpl.render(
         datas_types=datas_types, settings=settings)
 
-    with open(os.path.join(path, "index.html"), "wb") as fh:
+    export_path = os.path.join(path, 'export')
+    if not os.path.exists(export_path):
+        os.mkdir(export_path)
+    copy_tree("datas", os.path.join(export_path, "datas"))
+
+    with open(os.path.join(export_path, "index.html"), "wb") as fh:
         fh.write(output.encode('utf-8'))

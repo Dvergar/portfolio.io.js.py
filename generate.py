@@ -92,29 +92,20 @@ if arguments['build']:
     box_background_color = palette.get('box_background')
     if box_background_color is None:
         # GENERATE box_background
-        color = spectra.html(palette['website_background']).to("hsv")
-        hsl = list(color.values)
-        hsl[2] = 0.25
-        color = spectra.hsl(*hsl)
-        palette['box_background'] = color.hexcode
+        color = spectra.html(palette['website_background'])
+        palette['box_background'] = color.darken(18).hexcode
 
     headers_color = palette.get('headers')
     if headers_color is None:
         # GENERATE headers
-        color = spectra.html(palette['website_background']).to("hsv")
-        hsl = list(color.values)
-        hsl[2] = 0.23
-        color = spectra.hsl(*hsl)
-        palette['headers'] = color.hexcode
+        color = spectra.html(palette['website_background'])
+        palette['headers'] = color.darken(18).hexcode
 
     box_headers_color = palette.get('box_headers')
     if box_headers_color is None:
         # GENERATE box_headers
-        color = spectra.html(palette['box_background']).to("lab")
-        lab = list(color.values)
-        lab[0] = 51
-        color = spectra.lab(*lab)
-        palette['box_headers'] = color.hexcode
+        color = spectra.html(palette['box_background'])
+        palette['box_headers'] = color.darken(16).hexcode
 
         # GENERATE box_description
         color = spectra.html(palette['box_background']).to("lab")

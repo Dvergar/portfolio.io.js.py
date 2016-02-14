@@ -27,24 +27,6 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="datas/logo.png">
   <style type="text/css">
-    .retroshadow {
-        color: #2c2c2c;
-        /*background-color: #d5d5d5;*/
-        letter-spacing: .05em;
-        text-shadow: 
-          2px 2px 0px #d5d5d5, 
-          7px 7px 0px rgba(0, 0, 0, 0.2);
-      }
-
-    .imgBorder {
-      padding: 15px;
-      background-color: white;
-      box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-      -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
-      -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-    }
-
-
     @font-face {
       font-family: "Mono Social Icons Font";
       src: url('http://drinchev.github.io/monosocialiconsfont/fonts/MonoSocialIconsFont-1.10.eot');
@@ -72,62 +54,59 @@
 		    margin-right: 0.3em;
 		    font-size: 130%;
 		}
-  </style>
+	</style>
 
 
 </head>
 <body style="background-color:#556270">
 
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="section hero">
-    <div class="container">
-      <div class="row">
-        <div style="margin-top: 5%">
-          <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase">
-          	{% if settings.header %}
-          		{{settings.header}}
-        		{% else %}
-        			{{settings.title}}
-          	{% endif %}
-          	<img src="{{settings.logo_image}}"/>
-          	
-          </h2>
-          <!-- <span class="symbol">&#xe286;</span> -->
-          <!-- <p>Various works about game development <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p> -->
-        </div>
+  <div class="container">
+    <div class="row">
+      <div style="margin-top: 5%">
+        <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase">
+        	{% if settings.header %}
+        		{{settings.header}}
+      		{% else %}
+      			{{settings.title}}
+        	{% endif %}
+        	<img src="{{settings.logo_image}}"/>
+        	
+        </h2>
+        <!-- <span class="symbol">&#xe286;</span> -->
+        <!-- <p>Various works about game development <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p> -->
       </div>
     </div>
   </div>
 
-  <div class="section" style=";padding:2rem">
-    <div class="container">
+	<div class="container">
+	<ul style="list-style-type: none;">
+		{% for data_type_name, data_type in datas_types.items() %}
+			<li style="display: inline-block;">
+				{{ data_type_name }}
+			</li>
+		{% endfor %}
+	</ul>
 
+  <div class="container">
+		{% for data_type_name, data_type in datas_types.items() %}
+			{% for item_name, item in data_type.items() %}
+	      <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
+	        <div class="one-third column">
+	        	<img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
+	        	{% for label in item.labels %}
+        			<div style="background-color:#c7f464;font-weight:800;text-transform:uppercase;text-align:center;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
+      			{% endfor %}
+      		</div>
+	        
+	        <div class="two-thirds column">
+	          <h1 style="color:#c44d58;font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
+	          <p style="color:#6d2b2b; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
+	     	  </div>
 
-			{% for data_type_name, data_type in datas_types.items() %}
-				{% for item_name, item in data_type.items() %}
-		      <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
-		        <div class="one-third column">
-		        	<img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
-		        	{% for label in item.labels %}
-	        			<div style="background-color:#c7f464;font-weight:800;text-transform:uppercase;text-align:center;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
-        			{% endfor %}
-        		</div>
-		        
-		        <div class="two-thirds column">
-		          <h1 style="color:#c44d58;font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
-		          <p style="color:#6d2b2b; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
-		     	  </div>
-
-		    	</div>
-				{% endfor %}
+	    	</div>
 			{% endfor %}
-
-
-    </div>
+		{% endfor %}
   </div>
 
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
 </html>

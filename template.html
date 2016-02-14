@@ -49,10 +49,13 @@
         font-smoothing: antialiased;
     }
 
-    a.symbol:before {
+/*    a.symbol:before {
         content: attr(title);
         margin-right: 0.3em;
         font-size: 130%;
+    }*/
+    a.symbol {
+      text-decoration: none;
     }
 
     .label {
@@ -82,7 +85,9 @@
           {% endif %}
           <img style="" src="{{settings.logo_image}}"/></div>
         </h2>
-        <span class='symbol'>circletwitterbird</span><span class='symbol'>circlefacebook</span><span class='symbol'>circlegithubalt</span>
+        {% for social_service, url in settings.social.items() %}
+          <a href="{{ url }}" class='symbol'>circle{{ social_service }}</span>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -104,7 +109,7 @@
       {% for item_name, item in data_type.items() %}
         <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
           <div class="one-third column">
-            <img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
+            <img class="u-max-full-width" src="{{ item.image }}"/>
             {% for label in item.labels %}
               <div class="label" style="background-color:#c7f464;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
             {% endfor %}

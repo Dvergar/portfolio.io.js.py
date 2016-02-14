@@ -16,6 +16,7 @@ from distutils.dir_util import copy_tree
 import shutil
 
 import yaml
+import markdown
 from docopt import docopt
 from jinja2 import Template, Environment, FileSystemLoader
 
@@ -26,7 +27,7 @@ print arguments
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
-if arguments['createproject']:
+if arguments['create']:
     name = arguments['<name>']
     path = arguments['<project-path>']
 
@@ -68,7 +69,19 @@ if arguments['build']:
 
         # ITEM FILES
         with open(os.path.join(FILE_PATH, f), 'r') as stream:
-            datas_types[file_name] = yaml.load(stream)
+            yaml_items = yaml.load(stream)
+
+            # MARKDOWN PARSING
+            for item_name, item_obj in yaml_items.items():
+                markdown_descr = markdown.markdown(item_obj['description'])
+
+                # REMOVE <p></p> wrap
+                p, np = '<p>', '</p>'
+                markdown_descr_clean = markdown_descr[len(p):-len(np)]
+
+                item_obj['description'] = markdown_descr_clean
+
+            datas_types[file_name] = yaml_items
 
 
     # CREATE EXPORT PATH

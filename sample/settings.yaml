@@ -7,7 +7,7 @@ logo_image: "datas/logo.png"
 # Service name is based on this list (without the shape prefix): http://drinchev.github.io/monosocialiconsfont/ so
 #    github: "https://github.com/Dvergar/"
 #    twitter: "https://twitter.com/caribouloche"
-# would also be valid!
+# would also be valid, different icons will be displayed.
 social:
     githubalt: "https://github.com/Dvergar/"
     twitterbird: "https://twitter.com/caribouloche"

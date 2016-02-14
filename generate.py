@@ -1,5 +1,5 @@
 """Usage:
-    generate.py makeproject <name> [--dst <path>]
+    generate.py createproject <name> [--dst <path>]
     generate.py build <path>
 
 -h --help    show this
@@ -20,7 +20,7 @@ print arguments
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
-if arguments['makeproject']:
+if arguments['createproject']:
     name = arguments['<name>']
     path = arguments['<path>']
 

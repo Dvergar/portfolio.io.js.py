@@ -59,6 +59,13 @@
       font-weight:800;text-transform:uppercase;text-align:center;
     }
 
+    .symbol {
+      color: #4ecdc4;
+      font-size:25pt;
+      float:right;
+      margin-right:5pt;
+    }
+
   </style>
 </head>
 
@@ -66,15 +73,16 @@
 
   <div class="container">
     <div class="row">
-      <div style="margin-top: 5%">
-        <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase">
+      <div class="u-max-full-width" style="margin-top:5%">
+        <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase;float:left">
           {% if settings.header %}
             {{settings.header}}
           {% else %}
             {{settings.title}}
           {% endif %}
-          <img src="{{settings.logo_image}}"/>
+          <img style="" src="{{settings.logo_image}}"/></div>
         </h2>
+        <span class='symbol'>circletwitterbird</span><span class='symbol'>circlefacebook</span><span class='symbol'>circlegithubalt</span>
       </div>
     </div>
   </div>

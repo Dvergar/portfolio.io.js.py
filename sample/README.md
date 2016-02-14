@@ -1,0 +1,1 @@
+By building this project an export folder containing all the files to be hosted will be generated.

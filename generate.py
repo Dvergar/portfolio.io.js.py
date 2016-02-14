@@ -1,8 +1,14 @@
-"""Usage:
-    generate.py createproject <name> [--dst <path>]
-    generate.py build <path>
+"""
+Blabla
+
+Usage:
+    generate.py create <name> [--dst <project-path>]
+    generate.py build <project-path>
 
 -h --help    show this
+
+Examples:
+    wat
 
 """
 import os
@@ -22,7 +28,7 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 if arguments['createproject']:
     name = arguments['<name>']
-    path = arguments['<path>']
+    path = arguments['<project-path>']
 
     if path is None:
         path = ''
@@ -33,11 +39,12 @@ if arguments['createproject']:
 
     # MAKE DEFAULT PROJECT FROM SAMPLE FILES
     shutil.copy(os.path.join(SCRIPT_PATH, 'sample','settings.yaml'), path)
-    shutil.copy(os.path.join(SCRIPT_PATH, 'sample','games.yaml'), path)
+    shutil.copy(os.path.join(SCRIPT_PATH, 'sample','design.yaml'), path)
+    shutil.copy(os.path.join(SCRIPT_PATH, 'sample','fashion.yaml'), path)
 
 
 if arguments['build']:
-    FILE_PATH = arguments['<path>']
+    FILE_PATH = arguments['<project-path>']
     PATH, _ = os.path.split(FILE_PATH)
     ABS_PATH = os.path.join(SCRIPT_PATH, PATH)
 

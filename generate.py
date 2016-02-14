@@ -83,6 +83,9 @@ if arguments['build']:
 
             datas_types[file_name] = yaml_items
 
+    # LOAD PALETTE
+    with open(os.path.join(SCRIPT_PATH, "palette.yaml"), 'r') as stream:
+        palette = yaml.load(stream)
 
     # CREATE EXPORT PATH
     EXPORT_PATH = os.path.join(FILE_PATH, 'export')
@@ -93,8 +96,7 @@ if arguments['build']:
     # RENDER TEMPLATE
     env = Environment(loader=FileSystemLoader(ABS_PATH))
     tpl = env.get_template("template.html")
-    output = tpl.render(
-        datas_types=datas_types, settings=settings)
+    output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)
 
     # GENERATE INDEX.HTML
     with open(os.path.join(EXPORT_PATH, "index.html"), "wb") as fh:

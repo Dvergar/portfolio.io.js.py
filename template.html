@@ -35,31 +35,31 @@
       font-style: normal;
     }
 
-		.symbol, a.symbol:before {
-		    font-family: 'Mono Social Icons Font';
-		    -webkit-text-rendering: optimizeLegibility;
-		    -moz-text-rendering: optimizeLegibility;
-		    -ms-text-rendering: optimizeLegibility;
-		    -o-text-rendering: optimizeLegibility;
-		    text-rendering: optimizeLegibility;
-		    -webkit-font-smoothing: antialiased;
-		    -moz-font-smoothing: antialiased;
-		    -ms-font-smoothing: antialiased;
-		    -o-font-smoothing: antialiased;
-		    font-smoothing: antialiased;
-		}
+    .symbol, a.symbol:before {
+        font-family: 'Mono Social Icons Font';
+        -webkit-text-rendering: optimizeLegibility;
+        -moz-text-rendering: optimizeLegibility;
+        -ms-text-rendering: optimizeLegibility;
+        -o-text-rendering: optimizeLegibility;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        -ms-font-smoothing: antialiased;
+        -o-font-smoothing: antialiased;
+        font-smoothing: antialiased;
+    }
 
-		a.symbol:before {
-		    content: attr(title);
-		    margin-right: 0.3em;
-		    font-size: 130%;
-		}
+    a.symbol:before {
+        content: attr(title);
+        margin-right: 0.3em;
+        font-size: 130%;
+    }
 
-		.label {
-			font-weight:800;text-transform:uppercase;text-align:center;
-		}
+    .label {
+      font-weight:800;text-transform:uppercase;text-align:center;
+    }
 
-	</style>
+  </style>
 </head>
 
 <body style="background-color:#556270">
@@ -68,51 +68,48 @@
     <div class="row">
       <div style="margin-top: 5%">
         <h2 style="font-family: 'Roboto Condensed', sans-serif;color:#4ecdc4;font-size:50pt;text-transform:uppercase">
-        	{% if settings.header %}
-        		{{settings.header}}
-      		{% else %}
-      			{{settings.title}}
-        	{% endif %}
-        	<img src="{{settings.logo_image}}"/>
-        	
+          {% if settings.header %}
+            {{settings.header}}
+          {% else %}
+            {{settings.title}}
+          {% endif %}
+          <img src="{{settings.logo_image}}"/>
         </h2>
-        <!-- <span class="symbol">&#xe286;</span> -->
-        <!-- <p>Various works about game development <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p> -->
       </div>
     </div>
   </div>
 
-	<div class="container">
-		<ul style="list-style-type: none;">
-			{% for data_type_name, data_type in datas_types.items() %}
-				<li style="display: inline-block;">
-					<a href="#{{ data_type_name }}" class="label" style="background-color:#ff6b6b;padding:5px;margin-right:15px;color:#556270;text-decoration:none">{{ data_type_name }}</a>
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
+  <div class="container">
+    <ul style="list-style-type: none;">
+      {% for data_type_name, data_type in datas_types.items() %}
+        <li style="display: inline-block;">
+          <a href="#{{ data_type_name }}" class="label" style="background-color:#ff6b6b;padding:5px;margin-right:15px;color:#556270;text-decoration:none">{{ data_type_name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <div class="container">
-		{% for data_type_name, data_type in datas_types.items() %}
-			<span id="{{ data_type_name }}" style="font-size:27px;text-transform:uppercase;font-weight:200;font-style:italic;color:#4ecdc4">{{ data_type_name }}</span>
+    {% for data_type_name, data_type in datas_types.items() %}
+      <span id="{{ data_type_name }}" style="font-size:27px;text-transform:uppercase;font-weight:200;font-style:italic;color:#4ecdc4">{{ data_type_name }}</span>
 
-			{% for item_name, item in data_type.items() %}
-	      <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
-	        <div class="one-third column">
-	        	<img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
-	        	{% for label in item.labels %}
-        			<div class="label" style="background-color:#c7f464;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
-      			{% endfor %}
-      		</div>
-	        
-	        <div class="two-thirds column">
-	          <h1 style="color:#c44d58;font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
-	          <p style="color:#6d2b2b; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
-	     	  </div>
+      {% for item_name, item in data_type.items() %}
+        <div class="row" style="background-color:#ff6b6b;padding:2rem;border-bottom:15px solid #b24b4b;margin-bottom:50px">
+          <div class="one-third column">
+            <img class="u-max-full-width" src="http://i.imgur.com/UzuKWlu.gif"/>
+            {% for label in item.labels %}
+              <div class="label" style="background-color:#c7f464;color:#ff6b6b; margin-bottom:4px">{{label}}</div>
+            {% endfor %}
+          </div>
+          
+          <div class="two-thirds column">
+            <h1 style="color:#c44d58;font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
+            <p style="color:#6d2b2b; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
+          </div>
 
-	    	</div>
-			{% endfor %}
-		{% endfor %}
+        </div>
+      {% endfor %}
+    {% endfor %}
   </div>
 
 </body>

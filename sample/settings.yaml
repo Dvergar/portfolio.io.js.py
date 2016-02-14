@@ -2,7 +2,7 @@
 title: "Dummy's Portfolio"
  # Header text is equivalent to title variable if not set
 header: "Dummy's works"
-logo_image: "datas/logo.png"
+logo_image: "sample.png"
 
 # Service name is based on this list (without the shape prefix): http://drinchev.github.io/monosocialiconsfont/ so
 #    github: "https://github.com/Dvergar/"

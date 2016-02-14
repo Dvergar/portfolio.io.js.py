@@ -1,2 +1,9 @@
 website_background: "#556270"
+# website_background: "brown"
+
 box_background: "#ff6b6b"
+# box_background: "yellow"
+
+# headers: "green"
+# box_headers: "yellow"
+labels: "#c7f464"

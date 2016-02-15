@@ -26,7 +26,7 @@ from docopt import docopt
 from jinja2 import Template, Environment, FileSystemLoader
 
 arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
-print arguments
+print(arguments)
 
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))

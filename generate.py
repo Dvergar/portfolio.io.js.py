@@ -40,7 +40,6 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
 
 
-
 # ERROR & VALIDATION HANDLERS
 # THEME VALIDATION
 def theme_path_validation(THEME_PATH):
@@ -177,6 +176,9 @@ if arguments['build']:
     output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)
 
     # GENERATE INDEX.HTML
-    with open(os.path.join(EXPORT_PATH, "index.html"), "wb") as fh:
+    INDEX_FULL_PATH = os.path.join(EXPORT_PATH, "index.html")
+    with open(INDEX_FULL_PATH, "wb") as fh:
         fh.write(output.encode('utf-8'))
+
+    print("Project generated at:", os.path.dirname(os.path.abspath(INDEX_FULL_PATH)))
 

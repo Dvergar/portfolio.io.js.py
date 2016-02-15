@@ -1,8 +1,12 @@
 # Page title
 title: "Dummy's Portfolio"
+
  # Header text is equivalent to title variable if not set
 header: "Dummy's works"
 logo_image: "sample.png"
+theme: 'moo'
+# If palette is not defined here, will use the default one from theme.yaml
+# palette: 'cheer-up-emo-kid' 
 
 # Service name is based on this list (without the 'fa-' prefix): hhttp://fontawesome.io/icons/#brand
 social:

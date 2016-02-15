@@ -40,6 +40,26 @@ SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
 
 
+
+# ERROR & VALIDATION HANDLERS
+# THEME VALIDATION
+def theme_path_validation(THEME_PATH):
+    if not os.path.exists(THEME_PATH):
+        print("Theme '" + settings['theme'] + "' doesn't exist. Please set a valid theme name.")
+        exit()
+    else:
+        print("Using theme:", settings['theme'])
+
+# PALETTE VALIDATION
+def palette_path_validation(PALETTE_PATH):
+    if not os.path.exists(PALETTE_PATH):
+        print("Palette '" + settings['palette'] + "' doesn't exist. Please set a valid palette name.")
+        exit()
+    else:
+        print("Using palette:", settings['palette'])
+
+
+# GENERATOR
 if arguments['create']:
     name = arguments['<name>']
     path = arguments['<project-path>']
@@ -78,6 +98,20 @@ if arguments['build']:
         if file_name == 'settings':
             with open(os.path.join(FILE_PATH, f), 'r') as stream:
                 settings = yaml.load(stream)
+            
+            THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
+            theme_path_validation(THEME_PATH)
+
+            # THEME DEFAULT PALETTE FALLBACK
+            if settings.get('palette') is None:
+                with open(os.path.join(THEME_PATH, "theme.yaml"), 'r') as stream:
+                    theme = yaml.load(stream)
+
+            settings["palette"] = theme["palette"]
+
+            PALETTE_PATH = os.path.join(ABS_PATH, "palettes", settings['palette'])
+            palette_path_validation(PALETTE_PATH)
+
             continue
 
         # ITEM FILES
@@ -97,7 +131,7 @@ if arguments['build']:
             datas_types[file_name] = yaml_items
 
     # LOAD PALETTE
-    with open(os.path.join(SCRIPT_PATH, "palette.yaml"), 'r') as stream:
+    with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
         palette = yaml.load(stream)
 
     box_background_color = palette.get('box_background')
@@ -138,10 +172,11 @@ if arguments['build']:
         copy_tree(os.path.join(SCRIPT_PATH, "datas"), os.path.join(EXPORT_PATH, "datas"))
 
     # RENDER TEMPLATE
-    env = Environment(loader=FileSystemLoader(ABS_PATH))
+    env = Environment(loader=FileSystemLoader(THEME_PATH))
     tpl = env.get_template("template.html")
     output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)
 
     # GENERATE INDEX.HTML
     with open(os.path.join(EXPORT_PATH, "index.html"), "wb") as fh:
         fh.write(output.encode('utf-8'))
+

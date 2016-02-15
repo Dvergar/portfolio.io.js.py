@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="datas/normalize.css">
   <link rel="stylesheet" href="datas/skeleton.css">
 
-  {% if settings.logo_image == 'sample.png' %}
+  {% if settings.logo_image == 'sample.png' or settings.social|length > 0 %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   {% endif %}
 

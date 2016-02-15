@@ -20,7 +20,6 @@ from distutils.dir_util import copy_tree
 import shutil
 
 import yaml
-from colour import Color
 import spectra
 import markdown
 from docopt import docopt

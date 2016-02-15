@@ -1,2 +1,5 @@
 # portfolio.io.js.py
-Obviously a temporary name for a portfolio generator
+
+The shortest way to build your portfolio.
+
+

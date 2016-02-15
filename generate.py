@@ -16,20 +16,28 @@ Usage:
 
 """
 import os
+import pip
 from distutils.dir_util import copy_tree
 import shutil
 
-import yaml
-import spectra
-import markdown
-from docopt import docopt
-from jinja2 import Template, Environment, FileSystemLoader
+try: import yaml
+except ImportError: pip.main(["install", "yaml"])
 
-arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
-print(arguments)
+try: import spectra
+except ImportError: pip.main(["install", "spectra"])
+
+try: import markdown
+except ImportError: pip.main(["install", "markdown"])
+
+try: from docopt import docopt
+except ImportError: pip.main(["install", "docopt"])
+
+try: from jinja2 import Template, Environment, FileSystemLoader
+except ImportError: pip.main(["install", "jinja2"])
 
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
+arguments = docopt(__doc__, argv=None, help=True, version=None, options_first=False)
 
 
 if arguments['create']:

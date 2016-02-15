@@ -32,7 +32,25 @@
   <link rel="icon" type="image/png" href="datas/logo.png">
   <style type="text/css">
     .label {
-      font-weight:800;text-transform:uppercase;text-align:center;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .menu-item {
+      background-color: {{ palette.box_background }};
+      color: {{ palette.website_background }};
+      margin-right: 15px;
+      text-decoration: none;
+      padding: 5px;
+    }
+
+    .box-header {
+      font-size: 27px;
+      text-transform: uppercase;
+      font-weight: 200;
+      font-style: italic;
+      color: { palette. headers }};
     }
 
     a.symbol {
@@ -41,21 +59,62 @@
 
     .symbol {
       color: {{ palette.headers }};
-      font-size:25pt;
-      float:right;
-      margin-right:5pt;
+      font-size: 25pt;
+      float: right;
+      margin-right: 5pt;
     }
 
     a.symbol:hover {
-      color:{{ palette.labels }};
+      color: {{ palette.labels }};
     }
 
     p a {
-      color:{{ palette.box_headers }};
+      color: {{ palette.box_headers }};
     }
 
     p a:hover {
-      color:{{ palette.box_headers }};
+      color: {{ palette.box_headers }};
+    }
+
+    #header {
+      margin-top: 5%;
+    }
+
+    #header>h2 {
+      font-family: 'Roboto Condensed', sans-serif;
+      color: {{ palette.headers }};
+      font-size: 50pt;
+      text-transform: uppercase;
+      float: left;
+    }
+
+    .item {
+      background-color: {{ palette.box_background }};
+      padding: 2rem;
+      border-bottom: 15px solid {{ palette.box_headers }};
+      margin-bottom: 50px;
+    }
+
+    .item .label
+    {
+      background-color:{{ palette.labels }};
+      color:{{ palette.box_background }};
+      margin-bottom:4px;
+    }
+
+    .item-name
+    {
+      color: {{ palette.box_headers }};
+      font-size: 6rem;
+      word-wrap: break-word;
+      text-transform: uppercase;
+    }
+
+    .item-description {
+      color: {{ palette.box_description }};
+      font-size: 2.5rem;
+      font-weight: 300;
+      line-height: 120%;
     }
 
   </style>
@@ -65,8 +124,8 @@
 
   <div class="container">
     <div class="row">
-      <div class="u-max-full-width" style="margin-top:5%">
-        <h2 style="font-family: 'Roboto Condensed', sans-serif;color:{{ palette.headers }};font-size:50pt;text-transform:uppercase;float:left">
+      <div id="header" class="u-max-full-width">
+        <h2>
           {% if settings.header %}
             {{settings.header}}
           {% else %}
@@ -86,11 +145,12 @@
     </div>
   </div>
 
+  <!-- MENU -->
   <div class="container">
     <ul style="list-style-type: none;">
       {% for data_type_name, data_type in datas_types.items() %}
         <li style="display: inline-block;">
-          <a href="#{{ data_type_name }}" class="label" style="background-color:{{ palette.box_background }};padding:5px;margin-right:15px;color:{{ palette.website_background }};text-decoration:none">{{ data_type_name }}</a>
+          <a href="#{{ data_type_name }}" class="label menu-item">{{ data_type_name }}</a>
         </li>
       {% endfor %}
     </ul>
@@ -98,20 +158,20 @@
 
   <div class="container">
     {% for data_type_name, data_type in datas_types.items() %}
-      <span id="{{ data_type_name }}" style="font-size:27px;text-transform:uppercase;font-weight:200;font-style:italic;color:{{ palette. headers }}">{{ data_type_name }}</span>
+      <span id="{{ data_type_name }}" class="box-header">{{ data_type_name }}</span>
 
       {% for item_name, item in data_type.items() %}
-        <div class="row" style="background-color:{{ palette.box_background }};padding:2rem;border-bottom:15px solid {{ palette.box_headers }};margin-bottom:50px">
+        <div class="row item">
           <div class="one-third column">
             <img class="u-max-full-width" src="{{ item.image }}"/>
             {% for label in item.labels %}
-              <div class="label" style="background-color:{{ palette.labels }};color:{{ palette.box_background }}; margin-bottom:4px">{{label}}</div>
+              <div class="label">{{label}}</div>
             {% endfor %}
           </div>
           
           <div class="two-thirds column">
-            <h1 style="color:{{ palette.box_headers }};font-size:6rem; word-wrap: break-word;text-transform:uppercase">{{item_name}}</h1>
-            <p style="color:{{ palette.box_description }}; font-size:2.5rem; font-weight:300;line-height: 120%;">{{item.description}}</p>
+            <h1 class="item-name">{{item_name}}</h1>
+            <p class="item-description">{{item.description}}</p>
           </div>
 
         </div>

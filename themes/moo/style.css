@@ -1,0 +1,85 @@
+.label {
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.menu-item {
+  background-color: {{ palette.box_background }};
+  color: {{ palette.website_background }};
+  margin-right: 15px;
+  text-decoration: none;
+  padding: 5px;
+}
+
+.box-header {
+  font-size: 27px;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-style: italic;
+  color: {{ palette.headers }};
+}
+
+a.symbol {
+  text-decoration: none;
+}
+
+.symbol {
+  color: {{ palette.headers }};
+  font-size: 25pt;
+  float: right;
+  margin-right: 5pt;
+}
+
+a.symbol:hover {
+  color: {{ palette.labels }};
+}
+
+p a {
+  color: {{ palette.box_headers }};
+}
+
+p a:hover {
+  color: {{ palette.box_headers }};
+}
+
+#header {
+  margin-top: 5%;
+}
+
+#header>h2 {
+  font-family: 'Roboto Condensed', sans-serif;
+  color: {{ palette.headers }};
+  font-size: 50pt;
+  text-transform: uppercase;
+  float: left;
+}
+
+.item {
+  background-color: {{ palette.box_background }};
+  padding: 2rem;
+  border-bottom: 15px solid {{ palette.box_headers }};
+  margin-bottom: 50px;
+}
+
+.item .label
+{
+  background-color:{{ palette.labels }};
+  color:{{ palette.box_background }};
+  margin-bottom:4px;
+}
+
+.item-name
+{
+  color: {{ palette.box_headers }};
+  font-size: 6rem;
+  word-wrap: break-word;
+  text-transform: uppercase;
+}
+
+.item-description {
+  color: {{ palette.box_description }};
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 120%;
+}

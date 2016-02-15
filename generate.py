@@ -83,19 +83,23 @@ if arguments['build']:
 
     # LOAD USER PROJECT FILES
     datas_types = {}
-    for f in os.listdir(FILE_PATH):
-        file_name = os.path.splitext(f)[0]
-        file_ext = os.path.splitext(f)[-1]
+    for file_name in os.listdir(FILE_PATH):
+        file_root = os.path.splitext(file_name)[0]
+        file_ext = os.path.splitext(file_name)[-1]
 
-        # FILES TO IGNORE
-        if not os.path.isfile(os.path.join(FILE_PATH, f)):
+        # IGNORE DIRECTORIES
+        if not os.path.isfile(os.path.join(FILE_PATH, file_name)):
             continue
-        if not file_ext == '.yaml':
+
+        # CSS STYLING FILE
+        if file_name == 'style.css':
+            print("woothoo")
+
             continue
 
         # SETTING FILE
-        if file_name == 'settings':
-            with open(os.path.join(FILE_PATH, f), 'r') as stream:
+        if file_name == 'settings.yaml':
+            with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
                 settings = yaml.load(stream)
             
             THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
@@ -113,8 +117,12 @@ if arguments['build']:
 
             continue
 
+        # IGNORE NON YAML FILES
+        if not file_ext == '.yaml':
+            continue
+
         # ITEM FILES
-        with open(os.path.join(FILE_PATH, f), 'r') as stream:
+        with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
             yaml_items = yaml.load(stream)
 
             # MARKDOWN PARSING
@@ -127,7 +135,7 @@ if arguments['build']:
 
                 item_obj['description'] = markdown_descr_clean
 
-            datas_types[file_name] = yaml_items
+            datas_types[file_root] = yaml_items
 
     # LOAD PALETTE
     with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
@@ -163,12 +171,14 @@ if arguments['build']:
         # GENERATE labels
         palette['labels'] = palette['box_headers']
 
-
-    # CREATE EXPORT PATH
+    # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(FILE_PATH, 'export')
     if not os.path.exists(EXPORT_PATH):
         os.mkdir(EXPORT_PATH)
         copy_tree(os.path.join(SCRIPT_PATH, "datas"), os.path.join(EXPORT_PATH, "datas"))
+
+    # COPY CSS THEME FILE TO PROJECT
+    shutil.copy(os.path.join(THEME_PATH, 'style.css'), os.path.join(EXPORT_PATH, "datas"))
 
     # RENDER TEMPLATE
     env = Environment(loader=FileSystemLoader(THEME_PATH))

@@ -106,8 +106,8 @@ if arguments['build']:
             if settings.get('palette') is None:
                 with open(os.path.join(THEME_PATH, "theme.yaml"), 'r') as stream:
                     theme = yaml.load(stream)
+                settings["palette"] = theme["palette"]
 
-            settings["palette"] = theme["palette"]
 
             PALETTE_PATH = os.path.join(ABS_PATH, "palettes", settings['palette'])
             palette_path_validation(PALETTE_PATH)

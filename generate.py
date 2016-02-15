@@ -12,7 +12,7 @@ Usage:
 'create' will make a folder called <name> with a 
     default project inside and should be run only once per project
 'build' will generate an index.html from your
-    project files and should be run after for every change
+    project files and should be run after every change
 
 """
 import os

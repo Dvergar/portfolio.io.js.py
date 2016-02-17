@@ -117,8 +117,7 @@ if arguments['build']:
                     theme = yaml.load(stream)
                 settings["palette"] = theme["palette"]
 
-
-            PALETTE_PATH = os.path.join(ABS_PATH, "palettes", settings['palette'])
+            PALETTE_PATH = os.path.join(THEME_PATH, "palettes", settings['palette'])
             palette_path_validation(PALETTE_PATH)
 
             continue
@@ -144,33 +143,36 @@ if arguments['build']:
             datas_types[file_root] = yaml_items
 
     # LOAD PALETTE
-    with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
+    with open(os.path.join(PALETTE_PATH,  "palette.yaml"), 'r') as stream:
         palette = yaml.load(stream)
 
-    for i in range(1, 7):
-        color_name = 'color' + str(i)
-        hex_color = palette.get(color_name)
+    # for color_name, color_hex:
 
-        if hex_color is None:
-            if i == 1:
-                palette[color_name] = "#D1D1D1"
-            else:
-                prev_hex_color = palette['color' + str(i-1)]
-                color = spectra.html(prev_hex_color)
-                palette[color_name] = color.darken(16).hexcode
-        else:
-            modifier = None
-            split_hex_color = hex_color.split("+")
-            print(split_hex_color)
-            if len(split_hex_color) > 1:
-                modifier = "+"
-                ref_color_name, amount = split_hex_color
-                print(ref_color_name)
-                print(amount)
-                ref_color = spectra.html(palette[ref_color_name])
-                palette[color_name] = ref_color.darken(int(amount)).hexcode
 
-    print(palette)
+    # for i in range(1, 7):
+    #     color_name = 'color' + str(i)
+    #     hex_color = palette.get(color_name)
+
+    #     if hex_color is None:
+    #         if i == 1:
+    #             palette[color_name] = "#D1D1D1"
+    #         else:
+    #             prev_hex_color = palette['color' + str(i-1)]
+    #             color = spectra.html(prev_hex_color)
+    #             palette[color_name] = color.darken(16).hexcode
+    #     else:
+    #         modifier = None
+    #         split_hex_color = hex_color.split("+")
+    #         print(split_hex_color)
+    #         if len(split_hex_color) > 1:
+    #             modifier = "+"
+    #             ref_color_name, amount = split_hex_color
+    #             print(ref_color_name)
+    #             print(amount)
+    #             ref_color = spectra.html(palette[ref_color_name])
+    #             palette[color_name] = ref_color.darken(int(amount)).hexcode
+
+    # print(palette)
 
     # box_background_color = palette.get('box_background')
     # if box_background_color is None:

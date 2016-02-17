@@ -1,5 +1,5 @@
 body {
-	background-color:{{ palette.color1 }};
+	background-color:{{ palette.website_background }};
 }
 
 .label {
@@ -9,13 +9,13 @@ body {
 }
 
 a.label:hover {
-   background-color:{{ palette.color6 }};
-   color:{{ palette.color1 }};
+   background-color:red;
+   color:{{ palette.website_background }};
 }
 
 .menu-item {
-  background-color: {{ palette.color3 }};
-  color: {{ palette.color1 }};
+  background-color: {{ palette.box_background }};
+  color: {{ palette.website_background }};
   margin-right: 15px;
   text-decoration: none;
   padding: 5px;
@@ -26,12 +26,12 @@ a.label:hover {
   text-transform: uppercase;
   font-weight: 200;
   font-style: italic;
-  color: {{ palette.color5 }};
+  color: {{ palette.headers }};
 }
 
 
 .symbol {
-  color: {{ palette.color3 }};
+  color: {{ palette.headers }};
   font-size: 25pt;
   float: right;
   margin-right: 5pt;
@@ -42,16 +42,16 @@ a.symbol {
 }
 
 a.symbol:hover {
-  color: {{ palette.color6 }};
+  color: red;
 }
 
 
 .item-description a {
-  color: {{ palette.color4 }};
+  color: purple;
 }
 
 .item-description a:hover {
-  color: {{ palette.color6 }};
+  color: blue;
 }
 
 #header {
@@ -60,36 +60,36 @@ a.symbol:hover {
 
 #header>h2 {
   font-family: 'Roboto Condensed', sans-serif;
-  color: {{ palette.color5 }};
+  color: {{ palette.headers }};
   font-size: 50pt;
   text-transform: uppercase;
   float: left;
 }
 
 .item {
-  background-color: {{ palette.color2 }};
+  background-color: {{ palette.box_background }};
   padding: 2rem;
-  border-bottom: 15px solid {{ palette.color4 }};
+  border-bottom: 15px solid red;
   margin-bottom: 50px;
 }
 
 .item .label
 {
-  background-color:{{ palette.color3 }};
-  color:{{ palette.color2 }};
+  background-color:{{ palette.labels }};
+  color:{{ palette.box_background }};
   margin-bottom: 4px;
 }
 
 .item-name
 {
-  color: {{ palette.color5 }};
+  color: {{ palette.box_title }};
   font-size: 6rem;
   word-wrap: break-word;
   text-transform: uppercase;
 }
 
 .item-description {
-  color: {{ palette.color6 }};
+  color: {{ palette.box_description }};
   font-size: 2.5rem;
   font-weight: 300;
   line-height: 120%;

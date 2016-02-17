@@ -55,7 +55,7 @@
           {% endif %}
         </h2>
         {% for social_service, url in settings.social.items() %}
-          <a href="{{ url }}" class="symbol"><i class="fa fa-{{ social_service }}"></i></a>
+          <a href="{{ url }}" class="social"><i class="fa fa-{{ social_service }}"></i></a>
         {% endfor %}
       </div>
     </div>
@@ -66,7 +66,7 @@
     <ul style="list-style-type: none;">
       {% for data_type_name, data_type in datas_types.items() %}
         <li style="display: inline-block;">
-          <a href="#{{ data_type_name }}" class="label menu-item">{{ data_type_name }}</a>
+          <a href="#{{ data_type_name }}" class="label menu-label">{{ data_type_name }}</a>
         </li>
       {% endfor %}
     </ul>
@@ -74,20 +74,20 @@
 
   <div class="container">
     {% for data_type_name, data_type in datas_types.items() %}
-      <span id="{{ data_type_name }}" class="box-header">{{ data_type_name }}</span>
+      <span id="{{ data_type_name }}" class="section-title">{{ data_type_name }}</span>
 
       {% for item_name, item in data_type.items() %}
-        <div class="row item">
+        <div class="row entry">
           <div class="one-third column">
             <img class="u-max-full-width" src="{{ item.image }}"/>
             {% for label in item.labels %}
-              <div class="label">{{label}}</div>
+              <div class="label entry-label">{{label}}</div>
             {% endfor %}
           </div>
           
           <div class="two-thirds column">
-            <h1 class="item-name">{{item_name}}</h1>
-            <p class="item-description">{{item.description}}</p>
+            <h1 class="entry-name">{{item_name}}</h1>
+            <p class="entry-description">{{item.description}}</p>
           </div>
 
         </div>

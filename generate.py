@@ -38,7 +38,7 @@ except ImportError: pip.main(["install", "markdown"])
 try: from docopt import docopt
 except ImportError: pip.main(["install", "docopt"])
 
-try: from jinja2 import Template, Environment, FileSystemLoader
+try: from jinja2 import Template, Environment, FileSystemLoader, meta, contextfunction, contextfilter
 except ImportError: pip.main(["install", "jinja2"])
 
 
@@ -146,64 +146,6 @@ if arguments['build']:
     with open(os.path.join(PALETTE_PATH,  "palette.yaml"), 'r') as stream:
         palette = yaml.load(stream)
 
-    # for color_name, color_hex:
-
-
-    # for i in range(1, 7):
-    #     color_name = 'color' + str(i)
-    #     hex_color = palette.get(color_name)
-
-    #     if hex_color is None:
-    #         if i == 1:
-    #             palette[color_name] = "#D1D1D1"
-    #         else:
-    #             prev_hex_color = palette['color' + str(i-1)]
-    #             color = spectra.html(prev_hex_color)
-    #             palette[color_name] = color.darken(16).hexcode
-    #     else:
-    #         modifier = None
-    #         split_hex_color = hex_color.split("+")
-    #         print(split_hex_color)
-    #         if len(split_hex_color) > 1:
-    #             modifier = "+"
-    #             ref_color_name, amount = split_hex_color
-    #             print(ref_color_name)
-    #             print(amount)
-    #             ref_color = spectra.html(palette[ref_color_name])
-    #             palette[color_name] = ref_color.darken(int(amount)).hexcode
-
-    # print(palette)
-
-    # box_background_color = palette.get('box_background')
-    # if box_background_color is None:
-    #     # GENERATE box_background
-    #     color = spectra.html(palette['website_background'])
-    #     palette['box_background'] = color.darken(18).hexcode
-
-    # headers_color = palette.get('headers')
-    # if headers_color is None:
-    #     # GENERATE headers
-    #     color = spectra.html(palette['website_background'])
-    #     palette['headers'] = color.darken(18).hexcode
-
-    # box_headers_color = palette.get('box_headers')
-    # if box_headers_color is None:
-    #     # GENERATE box_headers
-    #     color = spectra.html(palette['box_background'])
-    #     palette['box_headers'] = color.darken(16).hexcode
-
-    #     # GENERATE box_description
-    #     color = spectra.html(palette['box_background']).to("lab")
-    #     lab = list(color.values)
-    #     lab[0] = 0
-    #     color = spectra.lab(*lab)
-    #     palette['box_description'] = color.hexcode
-
-    # labels_color = palette.get('labels')
-    # if labels_color is None:
-    #     # GENERATE labels
-    #     palette['labels'] = palette['box_headers']
-
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(FILE_PATH, 'export')
     if not os.path.exists(EXPORT_PATH):
@@ -215,6 +157,21 @@ if arguments['build']:
 
     # JINJA RENDERING
     env = Environment(loader=FileSystemLoader(THEME_PATH))
+
+    def brighten_filter(color_hex, brightness):
+        color = spectra.html(color_hex)
+        return color.brighten(brightness).hexcode
+
+    def darken_filter(color_hex, brightness):
+        color = spectra.html(color_hex)
+        return color.darken(brightness).hexcode
+
+    env.filters['brighten'] = brighten_filter
+    env.filters['darken'] = darken_filter
+
+    debug_template = env.from_string("{{ wot|darken(4) }} {{'blue'|brighten(10)}}")
+    print(debug_template.render({'wot':'red'}))
+
     tpl = env.get_template("template.html")
     css = env.get_template("style.css")
     tpl_output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)

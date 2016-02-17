@@ -1,58 +1,9 @@
+{% set description_color = palette.entry_background|darken(40) %}
+
 body {
-	background-color:{{ palette.website_background }};
+	background-color:{{ palette.web_background }};
 }
 
-.label {
-  font-weight: 800;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-a.label:hover {
-   background-color:red;
-   color:{{ palette.website_background }};
-}
-
-.menu-item {
-  background-color: {{ palette.box_background }};
-  color: {{ palette.website_background }};
-  margin-right: 15px;
-  text-decoration: none;
-  padding: 5px;
-}
-
-.box-header {
-  font-size: 27px;
-  text-transform: uppercase;
-  font-weight: 200;
-  font-style: italic;
-  color: {{ palette.headers }};
-}
-
-
-.symbol {
-  color: {{ palette.headers }};
-  font-size: 25pt;
-  float: right;
-  margin-right: 5pt;
-}
-
-a.symbol {
-  text-decoration: none;
-}
-
-a.symbol:hover {
-  color: red;
-}
-
-
-.item-description a {
-  color: purple;
-}
-
-.item-description a:hover {
-  color: blue;
-}
 
 #header {
   margin-top: 5%;
@@ -66,31 +17,81 @@ a.symbol:hover {
   float: left;
 }
 
-.item {
-  background-color: {{ palette.box_background }};
+.social {
+  color: {{ palette.headers }};
+  font-size: 25pt;
+  float: right;
+  margin-right: 5pt;
+}
+
+a.social {
+  text-decoration: none;
+}
+
+a.social:hover {
+  color: red;
+}
+
+.label {
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.menu-label {
+  background-color: {{ palette.entry_background }};
+  color: {{ palette.web_background }};
+  margin-right: 15px;
+  text-decoration: none;
+  padding: 5px;
+}
+
+a.menu-label:hover {
+   background-color:red;
+   color:{{ palette.web_background }};
+}
+
+.section-title {
+  font-size: 27px;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-style: italic;
+  color: {{ palette.headers }};
+}
+
+.entry {
+  background-color: {{ palette.entry_background }};
   padding: 2rem;
-  border-bottom: 15px solid red;
   margin-bottom: 50px;
+  border-bottom: 15px solid {{ palette.entry_background|darken(10) }};
 }
 
-.item .label
+.entry-name
 {
-  background-color:{{ palette.labels }};
-  color:{{ palette.box_background }};
-  margin-bottom: 4px;
-}
-
-.item-name
-{
-  color: {{ palette.box_title }};
   font-size: 6rem;
   word-wrap: break-word;
   text-transform: uppercase;
+  color: {{ palette.entry_background|darken(10) }};
 }
 
-.item-description {
-  color: {{ palette.box_description }};
+.entry-description {
   font-size: 2.5rem;
   font-weight: 300;
   line-height: 120%;
+  color: {{ description_color }};
+}
+
+.entry-description a {
+  color: {{ description_color }};
+}
+
+.entry-description a:hover {
+  color: {{ description_color|brighten(10) }};
+}
+
+.entry .label
+{
+  background-color:{{ palette.labels }};
+  color:{{ palette.entry_background }};
+  margin-bottom: 4px;
 }

@@ -1,12 +1,17 @@
 # Based on: http://www.colourlovers.com/palette/1930/cheer_up_emo_kid
+color1: "#556270"
+# website_background: "#556270"
 
-website_background: "#556270"
-# website_background: "#00979d"
-
-box_background: "#ff6b6b"
+color2: '#ff6b6b'
+# box_background: "#ff6b6b"
 # box_background: "yellow"
 
-labels: "#c7f464"
+color3: "#c7f464"
+color4: "color2+10"
+# color4: "#ff6b6b"
+# labels: "#c7f464"
 
+color5: "#4ecdc4"
+color6: "color2+40"
 # headers: "green"
 # box_headers: "yellow"

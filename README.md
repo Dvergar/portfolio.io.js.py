@@ -2,4 +2,34 @@
 
 The shortest way to build your portfolio.
 
+## Make your portfolio
+### Generate project source
+Run `generate.py create myportfolio`
 
+A folder named `myportfolio` has been created with a sample project inside.  
+Any `.yaml` file inside that folder will be considered as a section of your portfolio.
+
+The sample `design.yaml` should contain something like:
+
+```yaml
+Wooba:
+    description: "Lorem ipsum dolor sit amet, eu has purto everti, ea possit albucius duo, ius ne magna consequat. In quaeque euismod eos, eos elit maluisset scribentur eu."
+    image: "http://lorempixel.com/400/250/abstract/1"
+    labels:
+        - "Colourful"
+        - "Abstract"
+        - "Collaboration"
+```
+
+..and is quite self-explanatory.
+
+The name of this file will also be the name of the section in the menu of the generated page, here `DESIGN`.
+
+Rename, duplicate and change appropriate fields.
+
+### Build project
+Run `generate.py build myportfolio`
+
+An `export` folder has been created inside your `myportfolio` project.  
+
+**Open `index.html` and host it !**

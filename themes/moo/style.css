@@ -1,12 +1,21 @@
+body {
+	background-color:{{ palette.color1 }};
+}
+
 .label {
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
 }
 
+a.label:hover {
+   background-color:{{ palette.color6 }};
+   color:{{ palette.color1 }};
+}
+
 .menu-item {
-  background-color: {{ palette.box_background }};
-  color: {{ palette.website_background }};
+  background-color: {{ palette.color3 }};
+  color: {{ palette.color1 }};
   margin-right: 15px;
   text-decoration: none;
   padding: 5px;
@@ -17,30 +26,32 @@
   text-transform: uppercase;
   font-weight: 200;
   font-style: italic;
-  color: {{ palette.headers }};
+  color: {{ palette.color5 }};
+}
+
+
+.symbol {
+  color: {{ palette.color3 }};
+  font-size: 25pt;
+  float: right;
+  margin-right: 5pt;
 }
 
 a.symbol {
   text-decoration: none;
 }
 
-.symbol {
-  color: {{ palette.headers }};
-  font-size: 25pt;
-  float: right;
-  margin-right: 5pt;
-}
-
 a.symbol:hover {
-  color: {{ palette.labels }};
+  color: {{ palette.color6 }};
 }
 
-p a {
-  color: {{ palette.box_headers }};
+
+.item-description a {
+  color: {{ palette.color4 }};
 }
 
-p a:hover {
-  color: {{ palette.box_headers }};
+.item-description a:hover {
+  color: {{ palette.color6 }};
 }
 
 #header {
@@ -49,36 +60,36 @@ p a:hover {
 
 #header>h2 {
   font-family: 'Roboto Condensed', sans-serif;
-  color: {{ palette.headers }};
+  color: {{ palette.color5 }};
   font-size: 50pt;
   text-transform: uppercase;
   float: left;
 }
 
 .item {
-  background-color: {{ palette.box_background }};
+  background-color: {{ palette.color2 }};
   padding: 2rem;
-  border-bottom: 15px solid {{ palette.box_headers }};
+  border-bottom: 15px solid {{ palette.color4 }};
   margin-bottom: 50px;
 }
 
 .item .label
 {
-  background-color:{{ palette.labels }};
-  color:{{ palette.box_background }};
-  margin-bottom:4px;
+  background-color:{{ palette.color3 }};
+  color:{{ palette.color2 }};
+  margin-bottom: 4px;
 }
 
 .item-name
 {
-  color: {{ palette.box_headers }};
+  color: {{ palette.color5 }};
   font-size: 6rem;
   word-wrap: break-word;
   text-transform: uppercase;
 }
 
 .item-description {
-  color: {{ palette.box_description }};
+  color: {{ palette.color6 }};
   font-size: 2.5rem;
   font-weight: 300;
   line-height: 120%;

@@ -1,2 +1,4 @@
-# Grayscale theme based on background (gray) color !
-website_background: "Gainsboro"
+entry_background: "web_background|darken(10)"
+web_background: "darken(100)"
+labels: "entry_background|darken(10)"
+headers: "web_background|darken(20)"

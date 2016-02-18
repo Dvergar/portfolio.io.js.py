@@ -1,9 +1,3 @@
-# TODO +10 -10 from css
-# Check http://stackoverflow.com/questions/8260490/how-to-get-list-of-all-variables-in-jinja-2-templates
-# or maybe just a python file search
-# JUST MAKE A THEME FOLDER AND NO GLOBAL PALETTE : palette variable names are user-defined
-
-
 """
 -------------------
 Portfolio generator
@@ -23,6 +17,7 @@ Usage:
 """
 import os
 import pip
+import re
 from distutils.dir_util import copy_tree
 import shutil
 
@@ -64,6 +59,16 @@ def palette_path_validation(PALETTE_PATH):
         print("Using palette:", settings['palette'])
 
 
+# COLOR MANIPULATION HELPERS
+def brighten(color_hex, amount):
+    color = spectra.html(color_hex)
+    return color.brighten(amount).hexcode
+
+def darken(color_hex, amount):
+    color = spectra.html(color_hex)
+    return color.darken(amount).hexcode
+
+
 # GENERATOR
 if arguments['create']:
     name = arguments['<name>']
@@ -95,12 +100,6 @@ if arguments['build']:
 
         # IGNORE DIRECTORIES
         if not os.path.isfile(os.path.join(FILE_PATH, file_name)):
-            continue
-
-        # CSS STYLING FILE
-        if file_name == 'style.css':
-            print("woothoo")
-
             continue
 
         # SETTING FILE
@@ -143,8 +142,56 @@ if arguments['build']:
             datas_types[file_root] = yaml_items
 
     # LOAD PALETTE
-    with open(os.path.join(PALETTE_PATH,  "palette.yaml"), 'r') as stream:
+    # with open(os.path.join(PALETTE_PATH,  "palette.yaml"), 'r') as stream:
+    #     palette = yaml.load(stream)
+    with open(os.path.join(THEME_PATH, "palette.yaml"), 'r') as stream:
         palette = yaml.load(stream)
+
+    # PALETTE SKELETON NON-SEXY PARSER
+    for color_name, modifier_combo in palette.items():
+        parsed_modifier_combo = modifier_combo.split('|')
+        color_ref = parsed_modifier_combo[0]
+        if len(parsed_modifier_combo) == 1:
+            color_ref = None  # Default background color
+            modifier = parsed_modifier_combo[0]
+        else:
+            modifier = parsed_modifier_combo[1]
+
+        palette[color_name] = [color_ref, modifier]
+
+    new_palette = {}
+
+    def push_color(color_name):
+        color_ref_name, modifier = palette[color_name]
+        m = re.match('(brighten|darken)\((\d*)\)', modifier)
+        mod_type = m.group(1)
+        mod_amount = int(m.group(2))
+
+        if color_ref_name is None:
+            color_ref_name = "root"
+            new_palette["root"] = "#F0F0F0"
+
+        color_ref = new_palette.get(color_ref_name)
+        if color_ref is None:
+            push_color(color_ref_name)
+
+        # Grabbing again because could have been built from push_color above
+        color_ref = new_palette.get(color_ref_name)
+        if mod_type == "brighten":
+            new_color = brighten(color_ref, mod_amount)
+        elif mod_type == "darken":
+            new_color = darken(color_ref, mod_amount)
+
+        new_palette[color_name] = new_color
+
+
+    for color_name in palette:
+        if new_palette.get(color_name) is not None:
+            continue
+        push_color(color_name)
+
+    palette = new_palette
+
 
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(FILE_PATH, 'export')
@@ -158,19 +205,11 @@ if arguments['build']:
     # JINJA RENDERING
     env = Environment(loader=FileSystemLoader(THEME_PATH))
 
-    def brighten_filter(color_hex, brightness):
-        color = spectra.html(color_hex)
-        return color.brighten(brightness).hexcode
+    env.filters['brighten'] = brighten
+    env.filters['darken'] = darken
 
-    def darken_filter(color_hex, brightness):
-        color = spectra.html(color_hex)
-        return color.darken(brightness).hexcode
-
-    env.filters['brighten'] = brighten_filter
-    env.filters['darken'] = darken_filter
-
-    debug_template = env.from_string("{{ wot|darken(4) }} {{'blue'|brighten(10)}}")
-    print(debug_template.render({'wot':'red'}))
+    # debug_template = env.from_string("{{ wot|darken(4) }} {{'blue'|brighten(10)}}")
+    # print(debug_template.render({'wot':'red'}))
 
     tpl = env.get_template("template.html")
     css = env.get_template("style.css")

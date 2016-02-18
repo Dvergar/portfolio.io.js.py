@@ -50,7 +50,7 @@ theme: 'moo'
 # If palette is not defined here, will use the default one from theme.yaml
 # palette: 'grayscale'
 
-# Service name is based on this list (without the 'fa-' prefix): hhttp://fontawesome.io/icons/#brand
+# Service name is based on this list (without the 'fa-' prefix): http://fontawesome.io/icons/#brand
 social:
     github: "https://github.com/Dvergar/"
     twitter: "https://twitter.com/caribouloche"

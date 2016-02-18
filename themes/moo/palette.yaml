@@ -1,9 +1,8 @@
 # SKELETON PALETTE
 # Shouldn't contain any color, root color is white
-# Make color dependency depending on your theme using
-# brithness modifiers.
+# Make color dependency using brightness modifiers.
 # - This is a greyscale skeleton so that any color
-#   changed from a palette build a logical design
+#   changed from a palette build a coherent design
 entry_background: "web_background|darken(13)"
 web_background: "darken(5)"
 labels: "entry_background|darken(15)"

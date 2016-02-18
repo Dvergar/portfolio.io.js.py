@@ -1,4 +1,4 @@
-entry_background: "web_background|darken(10)"
-web_background: "darken(100)"
-labels: "entry_background|darken(10)"
-headers: "web_background|darken(20)"
+web_background: "grey"
+# entry_background: "#90C3D4"
+# labels: "#90C3D4"
+# headers: "#90C3D4"

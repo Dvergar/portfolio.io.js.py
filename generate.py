@@ -110,14 +110,27 @@ if arguments['build']:
             THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
             theme_path_validation(THEME_PATH)
 
-            # THEME DEFAULT PALETTE FALLBACK
+            # LOAD PALETTE
+            ## SKELETON
+            with open(os.path.join(THEME_PATH, "palette.yaml"), 'r') as stream:
+                palette = yaml.load(stream)
+
+            ## THEME FALLBACK
             if settings.get('palette') is None:
                 with open(os.path.join(THEME_PATH, "theme.yaml"), 'r') as stream:
                     theme = yaml.load(stream)
                 settings["palette"] = theme["palette"]
+                print(settings['palette'])
 
+            ## PATH VALIDATION
             PALETTE_PATH = os.path.join(THEME_PATH, "palettes", settings['palette'])
             palette_path_validation(PALETTE_PATH)
+
+            ## UPDATE PALETTE
+            with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
+                theme_palette = yaml.load(stream)
+                # print(palette)
+                palette.update(theme_palette)
 
             continue
 
@@ -141,29 +154,36 @@ if arguments['build']:
 
             datas_types[file_root] = yaml_items
 
-    # LOAD PALETTE
-    # with open(os.path.join(PALETTE_PATH,  "palette.yaml"), 'r') as stream:
-    #     palette = yaml.load(stream)
-    with open(os.path.join(THEME_PATH, "palette.yaml"), 'r') as stream:
-        palette = yaml.load(stream)
-
     # PALETTE SKELETON NON-SEXY PARSER
-    for color_name, modifier_combo in palette.items():
-        parsed_modifier_combo = modifier_combo.split('|')
-        color_ref = parsed_modifier_combo[0]
-        if len(parsed_modifier_combo) == 1:
-            color_ref = None  # Default background color
-            modifier = parsed_modifier_combo[0]
-        else:
-            modifier = parsed_modifier_combo[1]
-
-        palette[color_name] = [color_ref, modifier]
-
     new_palette = {}
+
+    for color_name, modifier_combo in palette.items():
+        parsed_modifier_combo = modifier_combo.rsplit('|')
+        parsed_modifier_combo = list(reversed(parsed_modifier_combo))
+        
+        left = parsed_modifier_combo[0]
+        m = re.match('(brighten|darken)\((\d*)\)', left)
+        # IF THAT'S NOT A MOD IT'S A RAW COLOR
+        if m is None:
+            raw_color = left
+            new_palette[color_name] = raw_color
+            continue
+
+        # IF COLOR MODIFIER
+        modifier = left
+        ## IF DIRECT REFERENCE TO ROOT COLOR
+        if len(parsed_modifier_combo) == 1:
+            color_ref_name = None
+        else:
+            color_ref_name = parsed_modifier_combo[1]
+
+        palette[color_name] = [color_ref_name, modifier]
+
 
     def push_color(color_name):
         color_ref_name, modifier = palette[color_name]
         m = re.match('(brighten|darken)\((\d*)\)', modifier)
+
         mod_type = m.group(1)
         mod_amount = int(m.group(2))
 
@@ -186,12 +206,10 @@ if arguments['build']:
 
 
     for color_name in palette:
-        if new_palette.get(color_name) is not None:
-            continue
-        push_color(color_name)
+        if new_palette.get(color_name) is None:
+            push_color(color_name)
 
     palette = new_palette
-
 
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(FILE_PATH, 'export')

@@ -18,7 +18,6 @@ Usage:
 import os
 import pip
 import re
-from distutils.dir_util import copy_tree
 import shutil
 
 try: import yaml
@@ -68,6 +67,12 @@ def darken(color_hex, amount):
     color = spectra.html(color_hex)
     return color.darken(amount).hexcode
 
+
+# MARKDOWN P STRIPPER
+def markdown_parse(string):
+    md_string = markdown.markdown(string)
+    p, np = '<p>', '</p>'
+    return md_string[len(p):-len(np)]
 
 # GENERATOR
 if arguments['create']:
@@ -140,19 +145,16 @@ if arguments['build']:
 
         # ITEM FILES
         with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
-            yaml_items = yaml.load(stream)
+            yaml_entries = yaml.load(stream)
 
             # MARKDOWN PARSING
-            for item_name, item_obj in yaml_items.items():
-                markdown_descr = markdown.markdown(item_obj['description'])
+            for entry_name, entry_obj in yaml_entries.items():
+                entry_obj['description'] = markdown_parse(entry_obj['description'])
 
-                # REMOVE <p></p> wrap
-                p, np = '<p>', '</p>'
-                markdown_descr_clean = markdown_descr[len(p):-len(np)]
+                for i in range(len(entry_obj['labels'])):
+                    entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i])
 
-                item_obj['description'] = markdown_descr_clean
-
-            datas_types[file_root] = yaml_items
+            datas_types[file_root] = yaml_entries
 
     # PALETTE SKELETON NON-SEXY PARSER
     new_palette = {}
@@ -212,10 +214,12 @@ if arguments['build']:
     palette = new_palette
 
     # CREATE EXPORT PATH & COPY DATA FILES
-    EXPORT_PATH = os.path.join(FILE_PATH, 'export')
+    EXPORT_PATH = os.path.join(os.getcwd(), arguments['<project-path>'], 'export')
+    print(EXPORT_PATH)
+    print(os.path.join(SCRIPT_PATH, "datas"))
     if not os.path.exists(EXPORT_PATH):
         os.mkdir(EXPORT_PATH)
-        copy_tree(os.path.join(SCRIPT_PATH, "datas"), os.path.join(EXPORT_PATH, "datas"))
+        shutil.copytree(os.path.join(SCRIPT_PATH, "datas"), os.path.join(EXPORT_PATH, "datas"))
 
     # COPY CSS THEME FILE TO PROJECT
     shutil.copy(os.path.join(THEME_PATH, 'style.css'), os.path.join(EXPORT_PATH, "datas"))
@@ -228,6 +232,8 @@ if arguments['build']:
 
     # debug_template = env.from_string("{{ wot|darken(4) }} {{'blue'|brighten(10)}}")
     # print(debug_template.render({'wot':'red'}))
+    # m = markdown_parse("hello")
+    # print(m)
 
     tpl = env.get_template("template.html")
     css = env.get_template("style.css")

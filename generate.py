@@ -69,10 +69,14 @@ def darken(color_hex, amount):
 
 
 # MARKDOWN P STRIPPER
-def markdown_parse(string):
+def markdown_parse(string, strip=False):
     md_string = markdown.markdown(string)
-    p, np = '<p>', '</p>'
-    return md_string[len(p):-len(np)]
+    
+    if strip:
+        p, np = '<p>', '</p>'
+        return md_string[len(p):-len(np)]
+    else:
+        return md_string
 
 # GENERATOR
 if arguments['create']:
@@ -152,7 +156,7 @@ if arguments['build']:
                 entry_obj['description'] = markdown_parse(entry_obj['description'])
 
                 for i in range(len(entry_obj['labels'])):
-                    entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i])
+                    entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i], strip=True)
 
             datas_types[file_root] = yaml_entries
 

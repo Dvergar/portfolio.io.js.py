@@ -38,6 +38,17 @@ a.social:hover {
   text-align: center;
 }
 
+.label a {
+  color: {{ palette.entry_background }};
+  /*color: {{ palette.headers }};*/
+  text-decoration:none;
+}
+
+.label a:after{
+  font-family: FontAwesome;
+  content: " \f14c";
+}
+
 .menu-label {
   background-color: {{ palette.entry_background }};
   color: {{ palette.web_background }};
@@ -74,8 +85,9 @@ a.menu-label:hover {
   color: {{ palette.entry_background|darken(10) }};
 }
 
-.entry-description {
+.entry-description  {
   font-size: 2.5rem;
+  /*font-size:200px;*/
   font-weight: 300;
   line-height: 120%;
   color: {{ description_color }};

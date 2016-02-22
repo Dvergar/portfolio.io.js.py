@@ -84,7 +84,7 @@ a.menu-label:hover {
   font-size: 6rem;
   word-wrap: break-word;
   text-transform: uppercase;
-  color: {{ palette.entry_background|darken(10) }};
+  color: {{ palette.entry_background|darken(12) }};
 }
 
 .entry-description  {

@@ -127,25 +127,27 @@ if arguments['build']:
             # LOAD PALETTE
             ## SKELETON
             with open(os.path.join(THEME_PATH, "palette.yaml"), 'r') as stream:
-                palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
+                skel_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
             ## THEME FALLBACK
             if settings.get('palette') is None:
                 with open(os.path.join(THEME_PATH, "theme.yaml"), 'r') as stream:
                     theme = yaml.load(stream, Loader=yamlordereddictloader.Loader)
                 settings["palette"] = theme["palette"]
-                print(settings['palette'])
+                print(type(settings['palette']))
 
-            ## PATH VALIDATION
-            PALETTE_PATH = os.path.join(THEME_PATH, "palettes", settings['palette'])
-            palette_path_validation(PALETTE_PATH)
+            if settings["palette"] != "SKELETON": ## SKELETON BEING RESERVED FOR GRAYSCALE PALETTE
+                ## PATH VALIDATION
+                PALETTE_PATH = os.path.join(THEME_PATH, "palettes", settings['palette'])
+                palette_path_validation(PALETTE_PATH)
 
-            ## UPDATE PALETTE
-            with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
-                theme_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
-                # print(palette)
-                palette.update(theme_palette)
+                ## UPDATE PALETTE
+                with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
+                    theme_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
+                    # print(palette)
+                    skel_palette.update(theme_palette)
 
+            palette = skel_palette
             continue
 
         # IGNORE NON YAML FILES

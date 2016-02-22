@@ -109,7 +109,7 @@ if arguments['build']:
     # LOAD USER PROJECT FILES
     reserved_files = ["settings.yaml"]
 
-    datas_types = {}
+    sections = {}
     for file_name in os.listdir(FILE_PATH):
         file_root = os.path.splitext(file_name)[0]
         file_ext = os.path.splitext(file_name)[-1]
@@ -137,7 +137,7 @@ if arguments['build']:
                 for i in range(len(entry_obj['labels'])):
                     entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i], strip=True)
 
-            datas_types[file_root] = yaml_entries
+            sections[file_root] = yaml_entries
 
     # SETTING FILE
     with open(os.path.join(FILE_PATH, "settings.yaml"), 'r') as stream:
@@ -278,10 +278,8 @@ if arguments['build']:
     tpl_html = env.get_template("template.html")
     tpl_css = env.from_string(css)
     
-    html_output = tpl_html.render(datas_types=datas_types, settings=settings, palette=palette)
+    html_output = tpl_html.render(sections=sections, settings=settings, palette=palette)
     css_output = tpl_css.render(palette=palette)
-
-    # print(datas_types)
 
     # GENERATE INDEX.HTML
     INDEX_FULL_PATH = os.path.join(EXPORT_PATH, "index.html")

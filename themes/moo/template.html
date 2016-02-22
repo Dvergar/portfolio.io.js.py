@@ -64,27 +64,27 @@
   <!-- MENU -->
   <div class="container">
     <ul style="list-style-type: none;">
-      {% for data_type_name, data_type in datas_types.items() %}
+      {% for section_name, section in sections.items() %}
         <li style="display: inline-block;">
-          <a href="#{{ data_type_name }}" class="label menu-label">{{ data_type_name }}</a>
+          <a href="#{{ section_name }}" class="label menu">{{ section_name }}</a>
         </li>
       {% endfor %}
     </ul>
   </div>
 
   <div class="container">
-    {% for data_type_name, data_type in datas_types.items() %}
-        <div id="{{ data_type_name }}" class="section-title">{{ data_type_name }}</div>
+    {% for section_name, section in sections.items() %}
+        <div id="{{ section_name }}" class="section-title">{{ section_name }}</div>
         <div class="row">
-        {% for item_name, item in data_type.items() %}
+        {% for entry_name, entry in section.items() %}
             {% if loop.index == 1 or loop.index == loop.length // 2 + 1 %}
               <div class="column one-half {{ loop.cycle('odd', 'even') }}">
             {% endif %}
                 <div class="column entry">
-                  <h1 class="entry-name">{{item_name}}</h1>
-                  <img class="u-max-full-width" style="min-width:100%;margin-bottom:10px" src="{{ item.image }}"/>
-                  <div class="entry-description">{{item.description}}</div>
-                  {% for label in item.labels %}
+                  <h1 class="entry-name">{{entry_name}}</h1>
+                  <img class="u-max-full-width" style="min-width:100%;margin-bottom:10px" src="{{ entry.image }}"/>
+                  <div class="entry-description">{{entry.description}}</div>
+                  {% for label in entry.labels %}
                     <span class="label entry-label">{{label}}</span>
                   {% endfor %}
                 </div>

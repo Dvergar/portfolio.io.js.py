@@ -1,16 +1,13 @@
-body {
-	/*background-color: blue;*/
+.menu {
+	color:{{ palette.social_icon }};
 }
 
-.menu-label {
-	color:{{ palette.social_icon }};
+a.menu:hover {
+   background-color:{{ palette.social_icon }};
+   color:{{ palette.web_background }};
 }
 
 .entry {
 	border-top: 2px dotted #C9C9C9;
 	border-bottom: none;
-}
-
-.entry .label {
-	/*color:black;*/
 }

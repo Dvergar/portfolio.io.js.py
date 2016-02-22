@@ -20,6 +20,8 @@ import pip
 import re
 import shutil
 
+# TODO REQUIREMENTS.TXT !?
+
 try: import yaml
 except ImportError: pip.main(["install", "yaml"])
 
@@ -34,6 +36,9 @@ except ImportError: pip.main(["install", "docopt"])
 
 try: from jinja2 import Template, Environment, FileSystemLoader, meta, contextfunction, contextfilter
 except ImportError: pip.main(["install", "jinja2"])
+
+try: import yamlordereddictloader
+except ImportError: pip.main(["install", "yamlordereddictloader"])
 
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -114,7 +119,7 @@ if arguments['build']:
         # SETTING FILE
         if file_name == 'settings.yaml':
             with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
-                settings = yaml.load(stream)
+                settings = yaml.load(stream, Loader=yamlordereddictloader.Loader)
             
             THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
             theme_path_validation(THEME_PATH)
@@ -122,12 +127,12 @@ if arguments['build']:
             # LOAD PALETTE
             ## SKELETON
             with open(os.path.join(THEME_PATH, "palette.yaml"), 'r') as stream:
-                palette = yaml.load(stream)
+                palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
             ## THEME FALLBACK
             if settings.get('palette') is None:
                 with open(os.path.join(THEME_PATH, "theme.yaml"), 'r') as stream:
-                    theme = yaml.load(stream)
+                    theme = yaml.load(stream, Loader=yamlordereddictloader.Loader)
                 settings["palette"] = theme["palette"]
                 print(settings['palette'])
 
@@ -137,7 +142,7 @@ if arguments['build']:
 
             ## UPDATE PALETTE
             with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
-                theme_palette = yaml.load(stream)
+                theme_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
                 # print(palette)
                 palette.update(theme_palette)
 
@@ -149,7 +154,7 @@ if arguments['build']:
 
         # ITEM FILES
         with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
-            yaml_entries = yaml.load(stream)
+            yaml_entries = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
             # MARKDOWN PARSING
             for entry_name, entry_obj in yaml_entries.items():
@@ -234,15 +239,12 @@ if arguments['build']:
     env.filters['brighten'] = brighten
     env.filters['darken'] = darken
 
-    # debug_template = env.from_string("{{ wot|darken(4) }} {{'blue'|brighten(10)}}")
-    # print(debug_template.render({'wot':'red'}))
-    # m = markdown_parse("hello")
-    # print(m)
-
     tpl = env.get_template("template.html")
     css = env.get_template("style.css")
     tpl_output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)
     css_output = css.render(palette=palette)
+
+    # print(datas_types)
 
     # GENERATE INDEX.HTML
     INDEX_FULL_PATH = os.path.join(EXPORT_PATH, "index.html")

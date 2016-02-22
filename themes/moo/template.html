@@ -74,24 +74,27 @@
 
   <div class="container">
     {% for data_type_name, data_type in datas_types.items() %}
-      <span id="{{ data_type_name }}" class="section-title">{{ data_type_name }}</span>
-
-      {% for item_name, item in data_type.items() %}
-        <div class="row entry">
-          <div class="one-third column">
-            <img class="u-max-full-width" src="{{ item.image }}"/>
-            {% for label in item.labels %}
-              <div class="label entry-label">{{label}}</div>
-            {% endfor %}
-          </div>
-          
-          <div class="two-thirds column">
-            <h1 class="entry-name">{{item_name}}</h1>
-            <div class="entry-description">{{item.description}}</div>
-          </div>
-
+        <div id="{{ data_type_name }}" class="section-title">{{ data_type_name }}</div>
+        <div class="row">
+        {% for item_name, item in data_type.items() %}
+            {% if loop.index == 1 or loop.index == loop.length // 2 + 1 %}
+              <div class="column one-half {{ loop.cycle('odd', 'even') }}">
+            {% endif %}
+                <div class="column entry">
+                  <h1 class="entry-name">{{item_name}}</h1>
+                  <img class="u-max-full-width" style="min-width:100%;margin-bottom:10px" src="{{ item.image }}"/>
+                  <div class="entry-description">{{item.description}}</div>
+                  {% for label in item.labels %}
+                    <span class="label entry-label">{{label}}</span>
+                  {% endfor %}
+                </div>
+            {% if loop.index == loop.length // 2 or loop.index == loop.length %}
+              </div>
+            {% endif %}
+        
+        {% endfor %}
         </div>
-      {% endfor %}
+
     {% endfor %}
   </div>
 

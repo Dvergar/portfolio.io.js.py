@@ -67,13 +67,15 @@ a.menu-label:hover {
   text-transform: uppercase;
   font-weight: 200;
   font-style: italic;
+  /*text-align:center;*/
   color: {{ palette.headers }};
 }
 
 .entry {
   background-color: {{ palette.entry_background }};
   padding: 2rem;
-  margin-bottom: 50px;
+  margin:0;
+  margin-bottom: 50px; /* move to row */
   border-bottom: 15px solid {{ palette.entry_background|darken(10) }};
 }
 
@@ -86,10 +88,10 @@ a.menu-label:hover {
 }
 
 .entry-description  {
-  font-size: 2.5rem;
-  /*font-size:200px;*/
+  font-size: 2rem;
   font-weight: 300;
   line-height: 120%;
+  margin-top: 10px;
   color: {{ description_color }};
 }
 
@@ -105,5 +107,13 @@ a.menu-label:hover {
 {
   background-color:{{ palette.labels }};
   color:{{ palette.entry_background }};
-  margin-bottom: 4px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 5px;
+  display:inline-block;
+}
+
+.odd
+{
+
 }

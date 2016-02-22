@@ -1,5 +1,6 @@
 web_background: "#556270"
+
+header: "#4ecdc4"
+
 entry_background: "#ff6b6b"
-labels: "#c7f464"
-headers: "#4ecdc4"
-social_icons: ""
+entry_label: "#c7f464"

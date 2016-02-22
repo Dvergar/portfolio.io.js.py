@@ -126,7 +126,7 @@ if arguments['build']:
         if file_name in reserved_files:
             continue
 
-        # ITEM FILES
+        # ENTRY FILES
         with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
             yaml_entries = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
@@ -140,7 +140,6 @@ if arguments['build']:
             datas_types[file_root] = yaml_entries
 
     # SETTING FILE
-    # if file_name == 'settings.yaml':
     with open(os.path.join(FILE_PATH, "settings.yaml"), 'r') as stream:
         settings = yaml.load(stream, Loader=yamlordereddictloader.Loader)
     
@@ -172,8 +171,6 @@ if arguments['build']:
                 skel_palette.update(theme_palette)
 
     palette = skel_palette
-    print(palette)
-    # continue
 
     # PALETTE SKELETON NON-SEXY PARSER
     new_palette = {}
@@ -242,7 +239,16 @@ if arguments['build']:
             push_color(color_name)
 
     palette = new_palette
-    print(palette)
+
+    # MERGING ALL CSS
+    with open(os.path.join(THEME_PATH, "style.css"), 'r') as stream:
+        css = stream.read()
+
+    CSS_FULL_PATH = os.path.join(PALETTE_PATH, "style.css")
+    if os.path.isfile(CSS_FULL_PATH):
+        with open(CSS_FULL_PATH, 'r') as stream:
+            css += "\n/* Palette specific css below */\n\n"
+            css += stream.read()
 
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(os.getcwd(), arguments['<project-path>'], 'export')
@@ -261,17 +267,18 @@ if arguments['build']:
     env.filters['brighten'] = brighten
     env.filters['darken'] = darken
 
-    tpl = env.get_template("template.html")
-    css = env.get_template("style.css")
-    tpl_output = tpl.render(datas_types=datas_types, settings=settings, palette=palette)
-    css_output = css.render(palette=palette)
+    tpl_html = env.get_template("template.html")
+    tpl_css = env.from_string(css)
+    
+    html_output = tpl_html.render(datas_types=datas_types, settings=settings, palette=palette)
+    css_output = tpl_css.render(palette=palette)
 
     # print(datas_types)
 
     # GENERATE INDEX.HTML
     INDEX_FULL_PATH = os.path.join(EXPORT_PATH, "index.html")
     with open(INDEX_FULL_PATH, "wb") as fh:
-        fh.write(tpl_output.encode('utf-8'))
+        fh.write(html_output.encode('utf-8'))
 
     # GENERATE STYLE.CSS
     STYLE_FULL_PATH = os.path.join(EXPORT_PATH, "datas", "style.css")

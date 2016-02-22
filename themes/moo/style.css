@@ -4,7 +4,6 @@ body {
 	background-color:{{ palette.web_background }};
 }
 
-
 #header {
   margin-top: 5%;
 }
@@ -49,7 +48,7 @@ a.social:hover {
 }
 
 .menu-label {
-  background-color: {{ palette.entry_background }};
+  background-color: {{ palette.menu }};
   color: {{ palette.web_background }};
   margin-right: 15px;
   text-decoration: none;
@@ -66,7 +65,6 @@ a.menu-label:hover {
   text-transform: uppercase;
   font-weight: 200;
   font-style: italic;
-  /*text-align:center;*/
   color: {{ palette.section }};
 }
 
@@ -83,7 +81,7 @@ a.menu-label:hover {
   font-size: 6rem;
   word-wrap: break-word;
   text-transform: uppercase;
-  color: {{ palette.entry_background|darken(12) }};
+  color: {{ palette.entry_title }};
 }
 
 .entry-description  {

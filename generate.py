@@ -197,7 +197,6 @@ if arguments['build']:
             color_ref_name = None
         # IF REFERENCE TO COLOR WITHOUT MODIFIER
         elif color_ref_wo_mod:
-            print("plop")
             color_ref_name = parsed_modifier_combo[0]
             modifier = None
         else:
@@ -207,17 +206,26 @@ if arguments['build']:
 
 
     def push_color(color_name):
-        color_ref_name, modifier = palette[color_name]
+        print(palette)
+        color_value, modifier = palette[color_name]
 
+        # EXTRACT MOD DATAS
         if modifier is not None:
             m = re.match('(brighten|darken)\((\d*)\)', modifier)
             mod_type = m.group(1)
             mod_amount = int(m.group(2))
 
+        color_ref_name = color_value
+
+        # ROOT COLOR CASE
         if color_ref_name is None:
             color_ref_name = "root"
             new_palette["root"] = "#F0F0F0"
+        # RAW COLOR + MOD CASE
+        elif color_ref_name not in palette.keys():
+            new_palette[color_value] = color_value
 
+        # IF REFERENCED COLOR NOT PROCESSED YET
         color_ref = new_palette.get(color_ref_name)
         if color_ref is None:
             push_color(color_ref_name)

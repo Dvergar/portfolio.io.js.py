@@ -1,5 +1,9 @@
 web_background: "#F7F7F7"
-# entry_background: "#ff6b6b"
-# labels: "#c7f464"
+
+entry_background: "web_background"
+entry_title: "header"
+entry_label: "white|darken(30)"
+
 header: "black"
 social_icon: "#1eaedb"
+menu: "web_background"

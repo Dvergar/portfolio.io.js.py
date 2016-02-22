@@ -8,6 +8,7 @@ web_background: "darken(5)"
 header: "web_background|darken(30)"
 social_icon: "header"
 section: "header"
+menu: "entry_background"
 
 entry_background: "web_background|darken(13)"
 entry_title: "entry_background|darken(12)"

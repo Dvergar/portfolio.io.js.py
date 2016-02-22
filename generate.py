@@ -19,6 +19,7 @@ import os
 import pip
 import re
 import shutil
+from collections import OrderedDict
 
 # TODO REQUIREMENTS.TXT !?
 
@@ -138,11 +139,20 @@ if arguments['build']:
                     entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i], strip=True)
 
             sections[file_root] = yaml_entries
+    sections = OrderedDict(sorted(sections.items()))
 
     # SETTING FILE
     with open(os.path.join(FILE_PATH, "settings.yaml"), 'r') as stream:
         settings = yaml.load(stream, Loader=yamlordereddictloader.Loader)
     
+
+    # MENU ORDER
+    if settings.get('menu_order') is not None:
+        new_sections = OrderedDict({})
+        for entry in settings.get('menu_order'):
+            new_sections[entry] = sections[entry]
+        sections = new_sections
+
     THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
     theme_path_validation(THEME_PATH)
 
@@ -206,7 +216,6 @@ if arguments['build']:
 
 
     def push_color(color_name):
-        print(palette)
         color_value, modifier = palette[color_name]
 
         # EXTRACT MOD DATAS

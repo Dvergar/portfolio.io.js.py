@@ -8,6 +8,10 @@ theme: 'moo'
 # If palette is not defined here, will use the default one from theme.yaml
 # palette: 'grayscale'
 
+# By default the menu is sorted alphabetically
+# but you can enforce that via menu_order
+# menu_order: ['fashion', 'design']
+
 # Service name is based on this list (without the 'fa-' prefix): http://fontawesome.io/icons/#brand
 social:
     github: "https://github.com/Dvergar/"

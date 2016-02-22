@@ -166,7 +166,7 @@ if arguments['build']:
         ## UPDATE PALETTE
         with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
             theme_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
-            # print(palette)
+
             if theme_palette is not None:
                 skel_palette.update(theme_palette)
 
@@ -220,10 +220,10 @@ if arguments['build']:
         # ROOT COLOR CASE
         if color_ref_name is None:
             color_ref_name = "root"
-            new_palette["root"] = "#F0F0F0"
+            new_palette["root"] = "#F0F0F0"  # FAKE REF
         # RAW COLOR + MOD CASE
         elif color_ref_name not in palette.keys():
-            new_palette[color_value] = color_value
+            new_palette[color_value] = color_value  # FAKE REF
 
         # IF REFERENCED COLOR NOT PROCESSED YET
         color_ref = new_palette.get(color_ref_name)

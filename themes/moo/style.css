@@ -18,7 +18,7 @@ body {
 }
 
 .social {
-  color: {{ palette.headers }};
+  color: {{ palette.social_icons }};
   font-size: 25pt;
   float: right;
   margin-right: 5pt;

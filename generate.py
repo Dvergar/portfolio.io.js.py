@@ -145,9 +145,11 @@ if arguments['build']:
                 with open(os.path.join(PALETTE_PATH, "palette.yaml"), 'r') as stream:
                     theme_palette = yaml.load(stream, Loader=yamlordereddictloader.Loader)
                     # print(palette)
-                    skel_palette.update(theme_palette)
+                    if theme_palette is not None:
+                        skel_palette.update(theme_palette)
 
             palette = skel_palette
+            print(palette)
             continue
 
         # IGNORE NON YAML FILES
@@ -176,8 +178,11 @@ if arguments['build']:
         
         left = parsed_modifier_combo[0]
         m = re.match('(brighten|darken)\((\d*)\)', left)
-        # IF THAT'S NOT A MOD IT'S A RAW COLOR
-        if m is None:
+
+        color_ref_wo_mod = left in palette.keys()
+
+        # IF THAT'S NOT A MOD AND NOT A REF ONLY COLOR, IT'S A RAW COLOR
+        if m is None and not color_ref_wo_mod:
             raw_color = left
             new_palette[color_name] = raw_color
             continue
@@ -185,8 +190,13 @@ if arguments['build']:
         # IF COLOR MODIFIER
         modifier = left
         ## IF DIRECT REFERENCE TO ROOT COLOR
-        if len(parsed_modifier_combo) == 1:
+        if len(parsed_modifier_combo) == 1 and m is not None:
             color_ref_name = None
+        # IF REFERENCE TO COLOR WITHOUT MODIFIER
+        elif color_ref_wo_mod:
+            print("plop")
+            color_ref_name = parsed_modifier_combo[0]
+            modifier = None
         else:
             color_ref_name = parsed_modifier_combo[1]
 
@@ -195,10 +205,11 @@ if arguments['build']:
 
     def push_color(color_name):
         color_ref_name, modifier = palette[color_name]
-        m = re.match('(brighten|darken)\((\d*)\)', modifier)
 
-        mod_type = m.group(1)
-        mod_amount = int(m.group(2))
+        if modifier is not None:
+            m = re.match('(brighten|darken)\((\d*)\)', modifier)
+            mod_type = m.group(1)
+            mod_amount = int(m.group(2))
 
         if color_ref_name is None:
             color_ref_name = "root"
@@ -210,12 +221,14 @@ if arguments['build']:
 
         # Grabbing again because could have been built from push_color above
         color_ref = new_palette.get(color_ref_name)
-        if mod_type == "brighten":
-            new_color = brighten(color_ref, mod_amount)
+        if modifier is None:
+            new_color_ref = color_ref
+        elif mod_type == "brighten":
+            new_color_ref = brighten(color_ref, mod_amount)
         elif mod_type == "darken":
-            new_color = darken(color_ref, mod_amount)
+            new_color_ref = darken(color_ref, mod_amount)
 
-        new_palette[color_name] = new_color
+        new_palette[color_name] = new_color_ref
 
 
     for color_name in palette:
@@ -223,6 +236,7 @@ if arguments['build']:
             push_color(color_name)
 
     palette = new_palette
+    print(palette)
 
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(os.getcwd(), arguments['<project-path>'], 'export')

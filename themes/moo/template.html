@@ -25,13 +25,13 @@
   <!-- THEME FILE -->
   <link rel="stylesheet" href="datas/style.css">
 
-  {% if settings.logo_image == 'sample.png' or settings.social|length > 0 %}
+  {% if settings.logo_image|length == 0 or settings.social|length > 0 %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   {% endif %}
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="datas/logo.png">
+  <link rel="icon" type="image/png" href="{{ settings.logo_image }}">
   <style type="text/css">
   </style>
 </head>
@@ -48,10 +48,10 @@
             {{settings.title}}
           {% endif %}
 
-          {% if settings.logo_image == 'sample.png' %}
+          {% if settings.logo_image|length == 0 %}
             <i class="fa fa-cube"></i>
           {% else %}
-            <img src="{{settings.logo_image}}"/>
+            <img id="logo" src="{{settings.logo_image}}"/>
           {% endif %}
         </h2>
         {% for social_service, url in settings.social.items() %}
@@ -82,7 +82,16 @@
             {% endif %}
                 <div class="column entry">
                   <h1 class="entry-name">{{entry_name}}</h1>
-                  <img class="u-max-full-width" style="min-width:100%; margin-bottom:10px" src="{{ entry.image }}"/>
+                  <img class="u-max-full-width" src="{{ entry.image }}"/>
+                  {% for image in entry.images %}
+                    <img class="u-max-full-width" src="{{ image }}"/>
+                  {% endfor %}
+                  {% if entry.video|length > 0 %}
+                    <video style="width:100%" autoplay loop>
+                      <source src="{{ entry.video }}">
+                      Your browser does not support the video tag.
+                    </video>
+                  {% endif %}
                   <div class="entry-description">{{entry.description}}</div>
                   {% for label in entry.labels %}
                     <span class="label entry-label">{{label}}</span>

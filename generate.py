@@ -103,20 +103,18 @@ if arguments['create']:
 
 
 if arguments['build']:
-    FILE_PATH = arguments['<project-path>']
-    PATH, _ = os.path.split(FILE_PATH)
-    ABS_PATH = os.path.join(SCRIPT_PATH, PATH)
+    PROJECT_PATH = arguments['<project-path>']
 
     # LOAD USER PROJECT FILES
     reserved_files = ["settings.yaml"]
 
     sections = {}
-    for file_name in os.listdir(FILE_PATH):
+    for file_name in os.listdir(PROJECT_PATH):
         file_root = os.path.splitext(file_name)[0]
         file_ext = os.path.splitext(file_name)[-1]
 
         # IGNORE DIRECTORIES
-        if not os.path.isfile(os.path.join(FILE_PATH, file_name)):
+        if not os.path.isfile(os.path.join(PROJECT_PATH, file_name)):
             continue
 
         # IGNORE NON YAML FILES
@@ -128,7 +126,7 @@ if arguments['build']:
             continue
 
         # ENTRY FILES
-        with open(os.path.join(FILE_PATH, file_name), 'r') as stream:
+        with open(os.path.join(PROJECT_PATH, file_name), 'r') as stream:
             yaml_entries = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
             # MARKDOWN PARSING
@@ -142,9 +140,8 @@ if arguments['build']:
     sections = OrderedDict(sorted(sections.items()))
 
     # SETTING FILE
-    with open(os.path.join(FILE_PATH, "settings.yaml"), 'r') as stream:
+    with open(os.path.join(PROJECT_PATH, "settings.yaml"), 'r') as stream:
         settings = yaml.load(stream, Loader=yamlordereddictloader.Loader)
-    
 
     # MENU ORDER
     if settings.get('menu_order') is not None:
@@ -153,7 +150,7 @@ if arguments['build']:
             new_sections[entry] = sections[entry]
         sections = new_sections
 
-    THEME_PATH = os.path.join(ABS_PATH, "themes", settings['theme'])
+    THEME_PATH = os.path.join(SCRIPT_PATH, "themes", settings['theme'])
     theme_path_validation(THEME_PATH)
 
     # LOAD PALETTE
@@ -269,14 +266,21 @@ if arguments['build']:
 
     # CREATE EXPORT PATH & COPY DATA FILES
     EXPORT_PATH = os.path.join(os.getcwd(), arguments['<project-path>'], 'export')
-    print(EXPORT_PATH)
-    print(os.path.join(SCRIPT_PATH, "datas"))
+
     if not os.path.exists(EXPORT_PATH):
         os.mkdir(EXPORT_PATH)
         shutil.copytree(os.path.join(SCRIPT_PATH, "datas"), os.path.join(EXPORT_PATH, "datas"))
 
     # COPY CSS THEME FILE TO PROJECT
     shutil.copy(os.path.join(THEME_PATH, 'style.css'), os.path.join(EXPORT_PATH, "datas"))
+
+    # LOGO STUFF
+    ## COPY LOGO IMAGE TO PROJECT
+    shutil.copy(os.path.join(PROJECT_PATH, settings['logo_image']), os.path.join(EXPORT_PATH, "datas"))
+
+    ## LOGO PATH UPDATE
+    if os.path.isfile(os.path.join(PROJECT_PATH, settings.get('logo_image'))):
+        settings['logo_image'] = 'datas/' + settings['logo_image']
 
     # JINJA RENDERING
     env = Environment(loader=FileSystemLoader(THEME_PATH))

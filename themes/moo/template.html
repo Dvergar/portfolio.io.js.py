@@ -82,7 +82,9 @@
             {% endif %}
                 <div class="column entry">
                   <h1 class="entry-name">{{entry_name}}</h1>
-                  <img class="u-max-full-width" src="{{ entry.image }}"/>
+                  {% if entry.image|length > 0 %}
+                    <img class="u-max-full-width" src="{{ entry.image }}"/>
+                  {% endif %}
                   {% for image in entry.images %}
                     <img class="u-max-full-width" src="{{ image }}"/>
                   {% endfor %}

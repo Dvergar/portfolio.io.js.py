@@ -275,12 +275,13 @@ if arguments['build']:
     shutil.copy(os.path.join(THEME_PATH, 'style.css'), os.path.join(EXPORT_PATH, "datas"))
 
     # LOGO STUFF
-    ## COPY LOGO IMAGE TO PROJECT
-    shutil.copy(os.path.join(PROJECT_PATH, settings['logo_image']), os.path.join(EXPORT_PATH, "datas"))
+    if settings.get('logo_image') is not None:
+        ## COPY LOGO IMAGE TO PROJECT
+        shutil.copy(os.path.join(PROJECT_PATH, settings['logo_image']), os.path.join(EXPORT_PATH, "datas"))
 
-    ## LOGO PATH UPDATE
-    if os.path.isfile(os.path.join(PROJECT_PATH, settings.get('logo_image'))):
-        settings['logo_image'] = 'datas/' + settings['logo_image']
+        ## LOGO PATH UPDATE
+        if os.path.isfile(os.path.join(PROJECT_PATH, settings.get('logo_image'))):
+            settings['logo_image'] = 'datas/' + settings['logo_image']
 
     # JINJA RENDERING
     env = Environment(loader=FileSystemLoader(THEME_PATH))

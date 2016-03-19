@@ -1,6 +1,6 @@
 Wooba:
     description: "Lorem ipsum dolor sit amet, eu has purto everti, ea possit albucius duo, ius ne magna consequat. In quaeque euismod eos, eos elit maluisset scribentur eu."
-    image: "http://lorempixel.com/400/250/abstract/1"
+    images: ["http://lorempixel.com/400/250/abstract/1"]
     labels:
         - "Colourful"
         - "Abstract"
@@ -8,7 +8,7 @@ Wooba:
 
 Hookoon:
     description: "Lorem ipsum dolor sit amet, eu has purtos everti, ea possit albucius duo, ius ne magna consequat. In quaeque euismod eos, eos elit maluisset scribentur eu."
-    image: "http://lorempixel.com/400/250/abstract/3"
+    images: ["http://lorempixel.com/400/250/abstract/3"]
     labels:
         - "Colourful"
         - "Abstract"

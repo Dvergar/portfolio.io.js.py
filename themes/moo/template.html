@@ -82,12 +82,9 @@
             {% endif %}
                 <div class="column entry">
                   <h1 class="entry-name">{{entry_name}}</h1>
-                  {% if entry.image|length > 0 %}
-                    <img class="u-max-full-width" src="{{ entry.image }}"/>
-                  {% endif %}
-                  {% for image in entry.images %}
-                    <img class="u-max-full-width" src="{{ image }}"/>
-                  {% endfor %}
+                    {% for image in entry.images %}
+                      <img class="u-max-full-width" src="{{ image }}"/>
+                    {% endfor %}
                   {% if entry.video|length > 0 %}
                     <video style="width:100%" autoplay loop>
                       <source src="{{ entry.video }}">
@@ -95,10 +92,10 @@
                     </video>
                   {% endif %}
                   <div class="entry-description">{{entry.description}}</div>
-                  {% for label in entry.labels %}
-                    <span class="label entry-label">{{label}}</span>
-                  {% endfor %}
-                </div>
+                    {% for label in entry.labels %}
+                      <span class="label entry-label">{{label}}</span>
+                    {% endfor %}
+                  </div>
             {% if loop.index == loop.length // 2 or loop.index == loop.length %}
               </div>
             {% endif %}

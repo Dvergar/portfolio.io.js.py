@@ -1,6 +1,6 @@
 Moop:
     description: "Lorem *ipsum* dolor sit amet, eu has purto everti, ea possit albucius duo, ius ne magna consequat. In quaeque euismod eos, eos elit maluisset scribentur eu."
-    image: "http://lorempixel.com/400/250/fashion/1"
+    images: ["http://lorempixel.com/400/250/fashion/1"]
     labels:
         - "Print"
         - "Clothes"
@@ -8,7 +8,7 @@ Moop:
 
 Makaloko:
     description: "Lorem ipsum dolor sit amet, eu has [purtos](http://google.com) everti, ea possit albucius duo, ius ne magna consequat. In quaeque euismod eos, eos elit maluisset scribentur eu."
-    image: "http://lorempixel.com/400/250/fashion/3"
+    images: ["http://lorempixel.com/400/250/fashion/3"]
     labels:
         - "Hairdressing"
         - "Female"

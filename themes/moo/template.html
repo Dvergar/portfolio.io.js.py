@@ -50,6 +50,8 @@
 
           {% if settings.logo_image|length == 0 %}
             <i class="fa fa-cube"></i>
+          {% elif settings.logo_image == 'blank' %}
+            <!-- NO ICON -->
           {% else %}
             <img id="logo" src="{{settings.logo_image}}"/>
           {% endif %}

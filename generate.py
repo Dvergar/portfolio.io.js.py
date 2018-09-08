@@ -131,7 +131,8 @@ if arguments['build']:
 
             # MARKDOWN PARSING
             for entry_name, entry_obj in yaml_entries.items():
-                entry_obj['description'] = markdown_parse(entry_obj['description'])
+                if entry_obj.get('description') is not None:
+                    entry_obj['description'] = markdown_parse(entry_obj['description'])
 
                 for i in range(len(entry_obj['labels'])):
                     entry_obj['labels'][i] = markdown_parse(entry_obj['labels'][i], strip=True)
@@ -275,7 +276,9 @@ if arguments['build']:
     shutil.copy(os.path.join(THEME_PATH, 'style.css'), os.path.join(EXPORT_PATH, "datas"))
 
     # LOGO STUFF
-    if settings.get('logo_image') is not None:
+    if settings.get('logo_image') == "blank":
+        settings['logo_image'] = "blank"
+    elif settings.get('logo_image') is not None:
         ## COPY LOGO IMAGE TO PROJECT
         shutil.copy(os.path.join(PROJECT_PATH, settings['logo_image']), os.path.join(EXPORT_PATH, "datas"))
 

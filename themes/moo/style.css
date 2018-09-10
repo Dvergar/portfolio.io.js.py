@@ -52,17 +52,14 @@ a.social:hover {
   content: " \f14c";
 }
 
-.menu {
-  background-color: {{ palette.menu }};
-  color: {{ palette.web_background }};
+.menu a {
+  color: {{ palette.menu }};
   margin-right: 15px;
   text-decoration: none;
   padding: 5px;
-}
 
-a.menu:hover {
-   background-color:{{ palette.entry_background|darken(15) }};
-   color:{{ palette.web_background }};
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .section-title {

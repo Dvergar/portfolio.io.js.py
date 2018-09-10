@@ -67,8 +67,13 @@
   <div class="container">
     <ul style="list-style-type: none;">
       {% for section_name, section in sections.items() %}
-        <li style="display: inline-block;">
-          <a href="#{{ section_name }}" class="label menu">{{ section_name }}</a>
+        <li style="display: inline-block;" class="menu">
+          <a href="#{{ section_name }}" >{{ section_name }}</a>
+        </li>
+      {% endfor %}
+      {% for link in settings.menu_links %}
+        <li style="display: inline-block;" class="menu label">
+          {{ link }}
         </li>
       {% endfor %}
     </ul>

@@ -126,7 +126,7 @@ if arguments['build']:
             continue
 
         # ENTRY FILES
-        with open(os.path.join(PROJECT_PATH, file_name), 'r') as stream:
+        with open(os.path.join(PROJECT_PATH, file_name), 'r', encoding="utf-8") as stream:
             yaml_entries = yaml.load(stream, Loader=yamlordereddictloader.Loader)
 
             # MARKDOWN PARSING
@@ -141,8 +141,14 @@ if arguments['build']:
     sections = OrderedDict(sorted(sections.items()))
 
     # SETTING FILE
-    with open(os.path.join(PROJECT_PATH, "settings.yaml"), 'r') as stream:
+    with open(os.path.join(PROJECT_PATH, "settings.yaml"), 'r', encoding="utf-8") as stream:
         settings = yaml.load(stream, Loader=yamlordereddictloader.Loader)
+
+    # MENU LINKS
+    if settings.get('menu_links') is not None:
+        menu_links = settings.get('menu_links')
+        for i in range(len(menu_links)):
+            menu_links[i] = markdown_parse(menu_links[i])
 
     # MENU ORDER
     if settings.get('menu_order') is not None:

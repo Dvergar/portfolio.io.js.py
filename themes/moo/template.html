@@ -88,7 +88,7 @@
               <div class="column one-half {{ loop.cycle('odd', 'even') }}">
             {% endif %}
                 <div class="column entry">
-                  <h1 class="entry-name">{{entry_name}}</h1>
+                  <h1 id="{{ entry_name }}" class="entry-name">{{entry_name}}</h1>
                     {% for image in entry.images %}
                       <img class="u-max-full-width" src="{{ image }}"/>
                     {% endfor %}
